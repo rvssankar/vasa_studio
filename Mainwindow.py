@@ -6,7 +6,10 @@ from Staff_Login import Staff_Login_User
 from Admin_changepassword import Admin_Password_Change
 from Staff_changepassword import Staff_Password_Change
 from Add_Staff import Add_Staff_Window
+from Add_Product import Add_Product_window
 import sys
+
+
 
 
 class Mainwindow(QMainWindow):
@@ -52,6 +55,7 @@ class Mainwindow(QMainWindow):
         admin_change = QAction('Admin Password',self)
         staff_change = QAction('Staff Password',self)
         Add_staff = QAction('Add Staff',self)
+        Add_product = QAction('Add Product',self)
         exit = QAction('Exit',self)
         logout = QAction('Logout',self)
 
@@ -65,14 +69,17 @@ class Mainwindow(QMainWindow):
 
         exitmenu.addAction(exit)
         logoutmenu.addAction(logout)
+        prodcostmenu.addAction(Add_product)
 
         admin.triggered.connect(self.adminpage)
         staff.triggered.connect(self.staffpage)
         admin_change.triggered.connect(self.admin_change_password)
         staff_change.triggered.connect(self.staff_change_password)
         Add_staff.triggered.connect(self.add_staff)
+        Add_product.triggered.connect(self.add_product)
         exit.triggered.connect(self.close)
         logout.triggered.connect(self.logout)
+
 
         self.menulist = [chgpwdmenu,addstaffmenu,custbillmenu,prodcostmenu,expensemenu,workstatsmenu,reportsmenu,remindermenu,logoutmenu]
         self.staffmenu =[custbillmenu,reportsmenu,remindermenu,logoutmenu,exitmenu]
@@ -90,20 +97,17 @@ class Mainwindow(QMainWindow):
         self.label.setScaledContents(True)
         self.label.resize(pixmap.width(),pixmap.height())
 
-        self.usercheck =False
-
-
         vbox.addWidget(self.label)
 
     def adminpage(self):
         dialog = Admin_Login_User()
         dialog.exec_()
-        if self.usercheck:
 
-            print("The username logged in is :"+dialog.username)
-            self.loginmenu.setDisabled(True)
-            for menu in self.menulist:
-                menu.setDisabled(False)
+
+        print("The username logged in is :"+dialog.username)
+        self.loginmenu.setDisabled(True)
+        for menu in self.menulist:
+            menu.setDisabled(False)
 
 
 
@@ -127,6 +131,10 @@ class Mainwindow(QMainWindow):
 
     def add_staff(self):
         dialog = Add_Staff_Window()
+        dialog.exec_()
+
+    def add_product(self):
+        dialog = Add_Product_window()
         dialog.exec_()
 
 

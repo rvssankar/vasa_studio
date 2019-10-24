@@ -206,6 +206,7 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
 
         self.add_btn.clicked.connect(self.newprod)
         self.save_btn.clicked.connect(self.savebtn)
+        self.clear_btn.clicked.connect(self.clearbtn)
 
     def comboindexchanged(self):
         current_value =self.combo_box.currentText()
@@ -249,7 +250,7 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
                 self.combovalue()
 
     def combovalue(self):
-        self.combolist = ['',]
+        self.combolist = set('',)
 
         sel_query ='SELECT PROD_NAME from dbo.PROD_DETAILS'
         self.connectdb()
@@ -259,7 +260,8 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
         for i in result:
 
                 x=i[0]
-                self.combolist.append(x)
+                self.combolist.add(x)
+
 
 
         self.combo_box.addItems(self.combolist)
@@ -267,26 +269,15 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
 
     def savebtn(self):
         cat_value  = str(self.combo_box.currentText())
-        print(cat_value)
-
-        if self.frame_size_le.setEnabled(True) and self.frame_size_le.text() !='':
-            frame_size = self.frame_size_le.text()
-            print(frame_size)
-        else:
-            QMessageBox.information(self,'Alert Window','Frame size is mandatory')
-            frame_size = 'NULL'
 
 
+        frame_size = self.frame_size_le.text()
 
         if self.rate_le.text().isnumeric():
             price = int(self.rate_le.text())
         else:
             QMessageBox.information(self,'Alert Window','Please enter the Rate details')
             price=0
-
-
-
-
 
         self.connectdb()
 
@@ -298,14 +289,31 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
             connect.commit()
             connect.close()
             QMessageBox.information(self,'Information','Prod information added successfully')
+            self.rate_le.clear()
 
-        elif cat_value =='FRAME' and frame_size !='NULL':
+
+        elif cat_value =='FRAME' and frame_size !='' and price != 0 :
 
             ins_query ='INSERT INTO dbo.PROD_DETAILS VALUES (NEXT VALUE FOR dbo.seq_prod, ?,?,?)'
             data = (cat_value,frame_size,price)
             cur.execute(ins_query,data)
             connect.commit()
             connect.close()
+            QMessageBox.information(self, 'Information', 'Prod information added successfully')
+            self.rate_le.clear()
+            self.frame_size_le.clear()
+        elif frame_size =='' and cat_value=='FRAME':
+
+            QMessageBox.information(self, 'Alert Window', 'Frame size is mandatory')
+
+    def clearbtn(self):
+        self.rate_le.clear()
+        self.frame_size_le.clear()
+
+
+
+
+
 
 
 

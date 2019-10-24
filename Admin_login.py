@@ -162,7 +162,7 @@ class Admin_Login_User(QDialog,Ui_Admin_Login):
 
         self.username = str.lower(self.username_le.text())
         self.password = self.password_le.text()
-        #self.usercheck= False
+        self.usercheck= False
         self.connectdb()
 
         query ='SELECT * FROM dbo.users WHERE username=? AND password =?'
@@ -175,7 +175,7 @@ class Admin_Login_User(QDialog,Ui_Admin_Login):
 
                 print(self.username+' is logged in')
 
-                #Mainwindow.usercheck = True
+                self.usercheck = True
                 self.close()
             else:
                 QMessageBox.information(self,'Alert Window','Please enter only ADMIN credentials')
