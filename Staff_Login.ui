@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Staff_Login</class>
+ <widget class="QDialog" name="Staff_Login">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>636</width>
+    <height>629</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#Staff_Login{background-image:url(:/Images/50-Beautiful.jpg)}</string>
+  </property>
+  <widget class="QLabel" name="login_title">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>-5</y>
+     <width>341</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>21</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(61, 61, 91)</string>
+   </property>
+   <property name="text">
+    <string>Staff Login Form</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="username_lbl">
+   <property name="geometry">
+    <rect>
+     <x>115</x>
+     <y>250</y>
+     <width>161</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 14pt &quot;Cambria&quot;;
+font:bold;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Username :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="password_lbl">
+   <property name="geometry">
+    <rect>
+     <x>116</x>
+     <y>320</y>
+     <width>161</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 14pt &quot;Cambria&quot;;
+font:bold;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Password  :</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="username_le">
+   <property name="geometry">
+    <rect>
+     <x>258</x>
+     <y>256</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius:15px;
+border-style:outset;
+border-width:3px;
+border-color:white;
+font: 11pt &quot;Cambria&quot;;
+font:bold</string>
+   </property>
+   <property name="placeholderText">
+    <string>Username here</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="password_le">
+   <property name="geometry">
+    <rect>
+     <x>258</x>
+     <y>326</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius:15px;
+border-style:outset;
+border-width:3px;
+border-color:white;
+font: 11pt &quot;Cambria&quot;;</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Password here</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="login_btn">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>426</y>
+     <width>151</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(126, 255, 126);
+border-radius:25px;
+border-style:outset;
+border-width:5px;
+border-color:green;</string>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancel_btn">
+   <property name="geometry">
+    <rect>
+     <x>326</x>
+     <y>426</y>
+     <width>151</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 131, 150);
+border-radius:25px;
+border-style:outset;
+border-width:5px;
+border-color:red;</string>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>78</x>
+     <y>126</y>
+     <width>461</width>
+     <height>421</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(70, 70, 70);
+border-radius:25px;
+border-style:outset;
+border-width:3px;
+border-color:red;
+</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="toolButton">
+   <property name="geometry">
+    <rect>
+     <x>246</x>
+     <y>78</y>
+     <width>121</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(200, 154, 47);
+border-radius:60px;
+border-style:outset;
+border-width:3px;
+border-color:red;
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>images/Staff_Login.png</normaloff>images/Staff_Login.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>110</width>
+     <height>110</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>2</x>
+     <y>57</y>
+     <width>631</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>login_title</zorder>
+  <zorder>username_lbl</zorder>
+  <zorder>password_lbl</zorder>
+  <zorder>username_le</zorder>
+  <zorder>password_le</zorder>
+  <zorder>login_btn</zorder>
+  <zorder>cancel_btn</zorder>
+  <zorder>toolButton</zorder>
+  <zorder>line</zorder>
+ </widget>
+ <resources>
+  <include location="Vasa.qrc"/>
+  <include location="images/Vasa.qrc"/>
+ </resources>
+ <connections/>
+</ui>

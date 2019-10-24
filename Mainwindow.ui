@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1148</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1148</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuLogin">
+    <property name="title">
+     <string>Login</string>
+    </property>
+    <addaction name="actionAdmin_Login"/>
+    <addaction name="actionStaff_Login"/>
+   </widget>
+   <widget class="QMenu" name="menuChange_Password">
+    <property name="title">
+     <string>Change Password</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuAdd_Staffs">
+    <property name="title">
+     <string>Add Staffs</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuCustomer_Billing">
+    <property name="title">
+     <string>Customer Billing</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuProduct_Cost">
+    <property name="title">
+     <string>Product Cost</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuExpense">
+    <property name="title">
+     <string>Expense</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuWork_Status">
+    <property name="title">
+     <string>Work Status</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuReports">
+    <property name="title">
+     <string>Reports</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuReminders">
+    <property name="title">
+     <string>Reminders</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuLogout">
+    <property name="title">
+     <string>Log Out</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuExit">
+    <property name="title">
+     <string>Exit</string>
+    </property>
+   </widget>
+   <addaction name="menuLogin"/>
+   <addaction name="menuChange_Password"/>
+   <addaction name="menuAdd_Staffs"/>
+   <addaction name="menuCustomer_Billing"/>
+   <addaction name="menuProduct_Cost"/>
+   <addaction name="menuExpense"/>
+   <addaction name="menuWork_Status"/>
+   <addaction name="menuReports"/>
+   <addaction name="menuReminders"/>
+   <addaction name="menuLogout"/>
+   <addaction name="menuExit"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAdmin_Login">
+   <property name="text">
+    <string>Admin Login</string>
+   </property>
+  </action>
+  <action name="actionStaff_Login">
+   <property name="text">
+    <string>Staff Login</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
