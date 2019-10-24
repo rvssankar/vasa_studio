@@ -268,9 +268,15 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
     def savebtn(self):
         cat_value  = str(self.combo_box.currentText())
         print(cat_value)
-        frame_size  = self.frame_size_le.text()
-        print(self.rate_le.text())
-        print(self.rate_le.text().isnumeric())
+
+        if self.frame_size_le.setEnabled(True) and self.frame_size_le.text() !='':
+            frame_size = self.frame_size_le.text()
+            print(frame_size)
+        else:
+            QMessageBox.information(self,'Alert Window','Frame size is mandatory')
+            frame_size = 'NULL'
+
+
 
         if self.rate_le.text().isnumeric():
             price = int(self.rate_le.text())
@@ -281,9 +287,10 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
 
 
 
+
         self.connectdb()
 
-        if price != 0:
+        if price != 0 and cat_value !='FRAME':
 
             upd_query ='UPDATE dbo.PROD_DETAILS SET SIZE=?, PRICE=? WHERE PROD_NAME=?'
             data =(frame_size,price,cat_value)
@@ -291,6 +298,14 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
             connect.commit()
             connect.close()
             QMessageBox.information(self,'Information','Prod information added successfully')
+
+        elif cat_value =='FRAME' and frame_size !='NULL':
+
+            ins_query ='INSERT INTO dbo.PROD_DETAILS VALUES (NEXT VALUE FOR dbo.seq_prod, ?,?,?)'
+            data = (cat_value,frame_size,price)
+            cur.execute(ins_query,data)
+            connect.commit()
+            connect.close()
 
 
 
