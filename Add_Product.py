@@ -291,17 +291,32 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
             QMessageBox.information(self,'Information','Prod information added successfully')
             self.rate_le.clear()
 
-
         elif cat_value =='FRAME' and frame_size !='' and price != 0 :
 
-            ins_query ='INSERT INTO dbo.PROD_DETAILS VALUES (NEXT VALUE FOR dbo.seq_prod, ?,?,?)'
-            data = (cat_value,frame_size,price)
-            cur.execute(ins_query,data)
-            connect.commit()
-            connect.close()
-            QMessageBox.information(self, 'Information', 'Prod information added successfully')
-            self.rate_le.clear()
-            self.frame_size_le.clear()
+            sel_query = 'SELECT * FROM dbo.PROD_DETAILS WHERE PROD_NAME=? AND SIZE =?'
+            sel_data =(cat_value,frame_size)
+
+            cur.execute(sel_query,sel_data)
+            sel_value = cur.fetchall()
+
+            if len(sel_value)>0:
+                update_query  = 'UPDATE dbo.PROD_DETAILS SET PRICE =? WHERE PROD_NAME=? AND SIZE=?'
+                upd_data =(price,cat_value,frame_size)
+                cur.execute(update_query,upd_data)
+                connect.commit()
+                connect.close()
+                QMessageBox.information(self,'Information','PROD details updated successfully')
+                self.rate_le.clear()
+                self.frame_size_le.clear()
+            else:
+                ins_query ='INSERT INTO dbo.PROD_DETAILS VALUES (NEXT VALUE FOR dbo.seq_prod, ?,?,?)'
+                data = (cat_value,frame_size,price)
+                cur.execute(ins_query,data)
+                connect.commit()
+                connect.close()
+                QMessageBox.information(self, 'Information', 'Prod information added successfully')
+                self.rate_le.clear()
+                self.frame_size_le.clear()
         elif frame_size =='' and cat_value=='FRAME':
 
             QMessageBox.information(self, 'Alert Window', 'Frame size is mandatory')

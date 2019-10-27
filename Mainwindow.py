@@ -58,12 +58,22 @@ class Mainwindow(QMainWindow):
         Add_product = QAction('Add Product',self)
         exit = QAction('Exit',self)
         logout = QAction('Logout',self)
+        dailybill = QAction('Daily Bill',self)
+        updatedaily=QAction('Update Daily Bill',self)
+        functionbill = QAction('Function Bill',self)
+        updatefuncbill = QAction('Update Function Bill',self)
+
 
         self.loginmenu.addAction(admin)
         self.loginmenu.addAction(staff)
 
         chgpwdmenu.addAction(admin_change)
         chgpwdmenu.addAction(staff_change)
+
+        custbillmenu.addAction(dailybill)
+        custbillmenu.addAction(updatedaily)
+        custbillmenu.addAction(functionbill)
+        custbillmenu.addAction(updatefuncbill)
 
         addstaffmenu.addAction(Add_staff)
 
