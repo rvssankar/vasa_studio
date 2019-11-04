@@ -568,6 +568,28 @@ color: rgb(55, 55, 166);</string>
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
+   <widget class="QPushButton" name="new_row_btn">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>320</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: green;
+font: 75 10pt &quot;Calibri&quot;;
+border-radius:20px;
+border-style:outset;
+border-width:3px;
+border-color:black;
+font:bold;</string>
+    </property>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolButton" name="cal_tool_btn">
    <property name="geometry">

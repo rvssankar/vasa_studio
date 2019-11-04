@@ -241,7 +241,7 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
         if okpressed and text!='':
                 value = str.upper(text)
                 self.connectdb()
-                ins_query = 'INSERT INTO dbo.PROD_DETAILS VALUES (NEXT VALUE FOR dbo.seq_prod,?)'
+                ins_query = 'INSERT INTO dbo.PROD_DETAILS (PROD_ID,PROD_NAME) VALUES (NEXT VALUE FOR dbo.seq_prod,?)'
                 cur.execute(ins_query,value)
                 connect.commit()
                 connect.close()
