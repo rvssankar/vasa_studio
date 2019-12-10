@@ -518,6 +518,8 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             rate_table.setFlags(Qt.ItemIsSelectable|Qt.ItemIsEnabled)
             self.viewtable.setItem(rownum, 3, rate_table)
 
+            self.viewtable.itemChanged.connect(self.amount_rate_calculation)
+
     def amount_rate_calculation(self,item):
         rownum = item.row()
         colnum = item.column()
@@ -634,6 +636,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         print(now.toString(Qt.ISODate))
 
         today = datetime.date.today()
+        self.billdate = today.strftime("%d/%m/%Y")
         date_format = today.strftime("%d/%m/%Y %A")
         print(date_format)
 
@@ -661,6 +664,48 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             QMessageBox.warning(self,'Warning','Please enter the customer information')
         elif self.viewtable.rowCount() ==0:
             QMessageBox.warning(self,'Warning','Please add the bill entry')
+
+        else:
+            billno = self.bill_le.text()
+            orderdate = datetime.datetime.now().date()
+
+            print('the order date value is ',orderdate,' and type is ',type(orderdate))
+
+            customername = self.customer_le.text()
+            phoneno = self.phone_le.text()
+            totalamount = self.total_le.text()
+            amountreceived = self.recieved_le.text()
+            dueamount = self.due_le.text()
+            deliverydate = self.delivery_date_le.text()
+
+            phoneno = int(phoneno)
+            #orderdate =
+            #orderdate = datetime.datetime.strptime(orderdate,'%d/%m/%Y').date()
+            #orderdate= datetime.date.today()
+            print('The order date is ',orderdate ,' and type is ', type(orderdate))
+            totalamount= float(totalamount)
+            amountreceived=float(amountreceived)
+            dueamount=float(dueamount)
+            billno =int(billno)
+
+            bill_type ='DAILY'
+
+            if deliverydate != '':
+
+                deliverydate = datetime.datetime.strptime(deliverydate,'%d/%m/%Y').date()
+            else:
+                deliverydate = datetime.date(9999,12,31)
+
+            print('the deliver date value is ', deliverydate, ' and type is ', type(deliverydate))
+
+            ins_query = 'INSERT INTO dbo.BILLING_TABLE VALUES(?,?,?,?,?,?,?,?,?)'
+            data = (billno,customername,phoneno,orderdate.strftime('%d/%m/%Y'),deliverydate.strftime('%d/%m/%Y'),totalamount,amountreceived,dueamount,bill_type)
+
+            cur.execute(ins_query,data)
+            connect.commit()
+            connect.close()
+            QMessageBox.information(self,'Message','Data saved successfully')
+
 
 
 if __name__ == "__main__":

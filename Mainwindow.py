@@ -62,6 +62,7 @@ class Mainwindow(QMainWindow):
         updatedaily=QAction('Update Daily Bill',self)
         functionbill = QAction('Function Bill',self)
         updatefuncbill = QAction('Update Function Bill',self)
+        print('Hello')
 
 
         self.loginmenu.addAction(admin)
