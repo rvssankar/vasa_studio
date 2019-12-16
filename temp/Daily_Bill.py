@@ -1,9 +1,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox
+from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem
 from PyQt5.QtCore import QDate,Qt
 import pyodbc
 import datetime
+from Add_Product import Add_Product_window
 
 
 class Ui_Daily_bill(object):
@@ -259,16 +260,6 @@ class Ui_Daily_bill(object):
         self.line_3.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_3.setObjectName("line_3")
-        self.new_row_btn = QtWidgets.QPushButton(self.table_frame)
-        self.new_row_btn.setGeometry(QtCore.QRect(160, 320, 101, 41))
-        self.new_row_btn.setStyleSheet("background-color: green;\n"
-"font: 75 10pt \"Calibri\";\n"
-"border-radius:20px;\n"
-"border-style:outset;\n"
-"border-width:3px;\n"
-"border-color:black;\n"
-"font:bold;")
-        self.new_row_btn.setObjectName("new_row_btn")
         self.cal_tool_btn = QtWidgets.QToolButton(Daily_bill)
         self.cal_tool_btn.setGeometry(QtCore.QRect(1159, 97, 30, 32))
         self.cal_tool_btn.setStyleSheet("background-color: rgb(255, 255, 255);")
@@ -340,10 +331,7 @@ class Ui_Daily_bill(object):
         self.total_label.setText(_translate("Daily_bill", "Total Amount (Rs.)           :"))
         self.recieved_label.setText(_translate("Daily_bill", "Amount Recieved (Rs.)  :"))
         self.due_label.setText(_translate("Daily_bill", "Amount Due (Rs.)             :"))
-        self.new_row_btn.setText(_translate("Daily_bill", "New Row"))
         self.title_label.setText(_translate("Daily_bill", "New Customer Bill"))
-
-
 
 class Add_Daily_Bill(QDialog,Ui_Daily_bill):
     def __init__(self,parent=None):
@@ -357,34 +345,18 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.recieved_le.setValidator(self.onlyint)
         self.due_le.setValidator(self.onlyint)
 
-        self.total_le.setEnabled(False)
-        self.total_le.setText(str(0))
-
-        self.due_le.setEnabled(False)
-        self.due_le.setText(str(0))
-
-        self.recieved_le.setText(str(0))
-        self.recieved_le.textChanged.connect(self.amountdue)
-
         self.cal_tool_btn.clicked.connect(self.delivery_calender)
-        self.new_row_btn.clicked.connect(self.newrowbtn)
-        self.remove_btn.clicked.connect(self.deleterow)
-        self.save_btn.clicked.connect(self.savebtn)
-
-        self.total_le.textChanged.connect(self.amountdue)
 
 
         self.bill_generator()
         self.current_date()
         self.table_records()
-        #self.totalamount()
-
 
     def connectdb(self):
         global cur
         global connect
 
-        connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
+        connect = pyodbc.connect('Driver={SQL SERVER};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
@@ -393,7 +365,6 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
 
     def table_records(self):
         self.viewtable.setRowCount(0)
-        self.viewtable.verticalHeader().setVisible(False)
         header = self.viewtable.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
@@ -403,22 +374,18 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         header.setSectionResizeMode(5, QtWidgets.QHeaderView.Stretch)
         header.setStyleSheet("QHeaderView::section { border: 1px solid ;}");
 
-        self.existingvaluechange()
-
-        self.viewtable.itemChanged.connect(self.totalamount)
-
-
-
-    def newrowbtn(self):
         self.combovalue()
-        rowvalue = self.viewtable.rowCount()
-        print('the row value is ',rowvalue)
-        self.viewtable.insertRow(rowvalue)
         self.newrow()
+
+        #self.viewtable.setCellWidget(0,1,self.category_combo)
+        #self.viewtable.setCellWidget(0,2,self.frame_combo)
+        #self.category_combo.currentIndexChanged.connect(self.newrow)
+
 
 
     def newrow(self):
-
+        curr_value = self.category_combo.currentText()
+        #curr_value1 = self.combo1.currentText()
         self.combo1 = QComboBox()
         self.combo2 = QComboBox()
         self.combo1.addItems(self.combolist)
@@ -428,15 +395,14 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.combo2.addItems(self.framelist)
         self.combo2.setCurrentText('NA')
 
-        self.rowposition = self.viewtable.rowCount()-1
-        print('The number of rows is ', self.rowposition)
-
-        self.viewtable.setItem(self.rowposition,0,QTableWidgetItem(str(self.rowposition+1)))
-        self.viewtable.setCellWidget(self.rowposition, 1, self.combo1)
-        self.viewtable.setCellWidget(self.rowposition, 2, self.combo2)
+        rowposition = self.viewtable.rowCount()
+        print('The number of rows is ', rowposition)
+        self.viewtable.insertRow(rowposition)
+        #print(self.viewtable.row())
+        self.viewtable.setItem(rowposition,0,QTableWidgetItem(str(rowposition+1)))
+        self.viewtable.setCellWidget(rowposition, 1, self.combo1)
+        self.viewtable.setCellWidget(rowposition, 2, self.combo2)
         self.combo1.currentIndexChanged.connect(self.framecomboassign)
-        self.combo1.currentIndexChanged.connect(self.ratevalue)
-        #self.combo2.currentIndexChanged.connect(self.ratevalue)
 
         print('the value is ',self.combo1.currentText())
         if self.combo1.currentText() =='FRAME':
@@ -444,149 +410,26 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         else:
             self.combo2.setEnabled(False)
 
-    def deleterow(self):
-        rownum = self.viewtable.currentRow()
-        print('the rownum is ',rownum)
+        print('The current row is ', self.viewtable.currentRow())
+        print ('the row position is ',rowposition)
+        current_row = self.viewtable.currentRow()
 
-        if rownum == -1:
-            QMessageBox.warning(self,'Warning', 'Please select a row for delete')
-        else:
+        if current_row == -1:
+            current_row =0
 
-            self.viewtable.removeRow(rownum)
-
-            rowcount= self.viewtable.rowCount()
-
-            print('the row number is ',rowcount)
-
-            for i in range(rowcount):
-                value =i+1
-                print('the row numbers is ',i)
-                rowvalue=QTableWidgetItem()
-                rowvalue.setText(str(value))
-                self.viewtable.setItem(i,0,rowvalue)
-
-            total = 0
-            for row in range(rowcount):
-                rowvalue = float(self.viewtable.item(row, 5).text())
-                total += rowvalue
-            self.total_le.setText(str(total))
-
+        print(current_row)
+        if current_row >= rowposition:
+            self.combo1.currentIndexChanged.connect(self.newrow)
 
     def framecomboassign(self):
-        rownum = self.viewtable.currentRow()
-        print('The row number value is ',rownum)
         current_value = self.combo1.currentText()
         print(current_value)
         if current_value == 'FRAME':
             self.combo2.setEnabled(True)
 
+
         else:
             self.combo2.setEnabled(False)
-
-    def ratevalue(self):
-        rownum= self.viewtable.currentRow()
-        curr_value = self.combo1.currentText()
-        if curr_value != 'FRAME':
-            SEL_QUERY =' SELECT PRICE from dbo.PROD_DETAILS WHERE PROD_NAME =?'
-
-            cur.execute(SEL_QUERY,curr_value)
-            result = cur.fetchall()
-            rate_value =str(result[0][0])
-            rate_table = QTableWidgetItem()
-            rate_table.setText(rate_value)
-            rate_table.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
-            self.viewtable.setItem(rownum, 3, rate_table)
-
-
-
-            self.viewtable.itemChanged.connect(self.amount_rate_calculation)
-
-
-            print('the result value is ',rate_value)
-            print(type(rate_value))
-        else:
-
-            self.combo2.currentIndexChanged.connect(self.frame_rate_value)
-
-
-    def frame_rate_value(self):
-            SEL_QUERY = 'SELECT PRICE from dbo.PROD_DETAILS WHERE PROD_NAME =? AND SIZE=?'
-            frame_curr_value = self.combo2.currentText()
-            curr_value = self.combo1.currentText()
-            rownum = self.viewtable.currentRow()
-
-            cur.execute(SEL_QUERY, (curr_value, frame_curr_value))
-            result = cur.fetchall()
-            rate_value = str(result[0][0])
-            rate_table = QTableWidgetItem()
-            rate_table.setText(rate_value)
-            rate_table.setFlags(Qt.ItemIsSelectable|Qt.ItemIsEnabled)
-            self.viewtable.setItem(rownum, 3, rate_table)
-
-            self.viewtable.itemChanged.connect(self.amount_rate_calculation)
-
-    def amount_rate_calculation(self,item):
-        rownum = item.row()
-        colnum = item.column()
-
-        print('the row number is ',rownum)
-
-        print('the column number is ',colnum)
-
-        if colnum ==4:
-            rate_value = self.viewtable.item(rownum,3).text()
-            print('the rate value is ',rate_value,' and its type is ',type(rate_value))
-
-            qty_value  = self.viewtable.item(rownum,4).text()
-            print('the qty value is ',qty_value)
-
-            int_rate_value = int(rate_value)
-            int_qty_value = int(qty_value)
-
-            amount_value = int_rate_value*int_qty_value
-            print('the amount value is',amount_value)
-            amount_table = QTableWidgetItem()
-            amount_table.setText(str(amount_value))
-            amount_table.setFlags(Qt.ItemIsSelectable|Qt.ItemIsEnabled)
-
-            self.viewtable.setItem(rownum,5,amount_table)
-
-    def totalamount(self,item):
-        self.total_le.setEnabled(False)
-        if item.column() == 5:
-
-
-            rowcount = self.viewtable.rowCount()
-
-            if rowcount == 0:
-                self.total_le.setText(str(0))
-
-            else:
-                total = 0
-                for row in range(rowcount):
-                    rowvalue = float(self.viewtable.item(row,5).text())
-                    total+=rowvalue
-                self.total_le.setText(str(total))
-
-    def amountdue(self):
-        print('Amount due function in')
-        totalamount = float(self.total_le.text())
-        Recievedamount = float(self.recieved_le.text())
-        print('Amount due is ', totalamount)
-        print('amoint  recoeved is ',Recievedamount)
-
-        balance = float(totalamount-Recievedamount )
-
-        print('The balanced amount is ',balance)
-
-        self.due_le.setText(str(balance))
-
-    def existingvaluechange(self):
-        rownum = self.viewtable.cellWidget(0,1)
-        print('The row number value is ', rownum)
-        #print('The value in Row is ',self.viewtable.item(rownum,1))
-
-
 
 
 
@@ -594,10 +437,14 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
     def combovalue(self):
         self.combolist = set()
         self.framelist =set()
-        sel_query ='SELECT PROD_NAME from dbo.PROD_DETAILS'
+
+
+
+        sel_query ='SELECT PROD_NAME,SIZE from dbo.PROD_DETAILS'
         self.connectdb()
         cur.execute(sel_query)
         result= cur.fetchall()
+
 
         for i in result:
 
@@ -616,6 +463,16 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             self.framelist.add(x)
         self.framelist.add('NA')
 
+
+
+
+        self.category_combo = QComboBox()
+        self.category_combo.addItems(self.combolist)
+        self.category_combo.setCurrentText('NA')
+
+        self.frame_combo = QComboBox()
+        self.frame_combo.addItems(self.framelist)
+        self.frame_combo.setCurrentText('NA')
 
 
     def bill_generator(self):
@@ -641,7 +498,6 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         print(now.toString(Qt.ISODate))
 
         today = datetime.date.today()
-        self.billdate = today.strftime("%d/%m/%Y")
         date_format = today.strftime("%d/%m/%Y %A")
         print(date_format)
 
@@ -664,66 +520,10 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.delivery_date_le.setText(getdate)
         self.calender.deleteLater()
 
-    def savebtn(self):
-        if self.customer_le.text() =='' or self.phone_le.text()=='':
-            QMessageBox.warning(self,'Warning','Please enter the customer information')
-        elif self.viewtable.rowCount() ==0:
-            QMessageBox.warning(self,'Warning','Please add the bill entry')
-
-        else:
-            billno = self.bill_le.text()
-            orderdate = datetime.datetime.now().date()
 
 
-            print('the order date value is ',orderdate,' and type is ',type(orderdate))
-
-            customername = self.customer_le.text()
-            phoneno = self.phone_le.text()
-            totalamount = self.total_le.text()
-            amountreceived = self.recieved_le.text()
-            dueamount = self.due_le.text()
-            deliverydate = self.delivery_date_le.text()
-
-            phoneno = int(phoneno)
-            #orderdate =
-            #orderdate = datetime.datetime.strptime(orderdate,'%d/%m/%Y').date()
-            #orderdate= datetime.date.today()
-            print('The order date is ',orderdate ,' and type is ', type(orderdate))
-            totalamount= float(totalamount)
-            amountreceived=float(amountreceived)
-            dueamount=float(dueamount)
-            billno =int(billno)
-
-            bill_type ='DAILY'
-
-            if deliverydate != '':
-
-                deliverydate = datetime.datetime.strptime(deliverydate,'%d/%m/%Y').date()
-            else:
-                deliverydate = datetime.date(9999,12,31)
-
-            print('the deliver date value is ', deliverydate, ' and type is ', type(deliverydate))
-
-            sql_order_date = orderdate.strftime("%d/%m/%Y")
-            sql_delivery_date = deliverydate.strftime("%d/%m/%Y")
-
-            ins_query = 'INSERT INTO dbo.BILLING_TABLE VALUES(?,?,?,?,?,?,?,?,?)'
-            ins_query1 = "INSERT INTO dbo.BILLING_TABLE (BILL_NO,CUSTOMER_NAME,PHONE_NO,BILLING_DATE,DELIVERY_DATE,TOTAL_AMOUNT) VALUES(?,?,?,?,?,?)"
-            data = (billno,customername,phoneno,orderdate,deliverydate,totalamount,amountreceived,dueamount,bill_type)
-            data1 = (billno, customername, phoneno, orderdate,deliverydate, totalamount)
-
-            cur.execute(ins_query,data)
-            connect.commit()
-            connect.close()
-            QMessageBox.information(self,'Message','Data saved successfully')
 
 
-            lineedit_col = [self.customer_le,self.phone_le,self.total_le,self.due_le,self.recieved_le]
-
-            for i in lineedit_col:
-                i.clear()
-            self.bill_generator()
-            self.current_date()
 
 
 
@@ -739,4 +539,3 @@ if __name__ == "__main__":
     ui = Add_Daily_Bill()
     ui.show()
     sys.exit(app.exec_())
-
