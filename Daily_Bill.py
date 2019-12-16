@@ -5,6 +5,7 @@ from PyQt5.QtCore import QDate,Qt
 import pyodbc
 import datetime
 
+print("hello")
 
 class Ui_Daily_bill(object):
     def setupUi(self, Daily_bill):
