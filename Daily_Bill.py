@@ -5,7 +5,7 @@ from PyQt5.QtCore import QDate,Qt
 import pyodbc
 import datetime
 
-print("hello")
+
 
 class Ui_Daily_bill(object):
     def setupUi(self, Daily_bill):
@@ -719,12 +719,42 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             QMessageBox.information(self,'Message','Data saved successfully')
 
 
-            lineedit_col = [self.customer_le,self.phone_le,self.total_le,self.due_le,self.recieved_le]
+            # order details in order_table:
 
-            for i in lineedit_col:
-                i.clear()
-            self.bill_generator()
-            self.current_date()
+            max_order_id_query = " SELECT MAX(ORDER_ID) FROM DBO.ORDER_DETAILS"
+            self.connectdb()
+            cur.execute(max_order_id_query)
+            result = cur.fetchall()
+            order_value = result[0][0]
+
+            if order_value != None:
+                order_value = order_value + 1
+                print("The order_id Value is ",order_value)
+            else:
+                order_value = 1
+                print('The else condition ', order_value)
+                print(type(order_value))
+
+            category_list =[self.viewtable.cellWidget(row,1).currentText() for row in range(self.viewtable.rowCount())]
+            frame_size_list = [self.viewtable.cellWidget(row,2).currentText() for row in range(self.viewtable.rowCount())]
+            rate_list = [self.viewtable.item(row,3).text() for row in range(self.viewtable.rowCount())]
+            qty_list = [self.viewtable.item(row,4).text() for row in range(self.viewtable.rowCount())]
+            amount_list =[self.viewtable.item(row,5).text() for row in range(self.viewtable.rowCount())]
+
+            print('the category values are',category_list)
+            print('the frame values are', frame_size_list)
+            print('the rate values are', rate_list)
+            print('the qty values are', qty_list)
+            print('the amount values are', amount_list)
+
+            #finding Prd_id
+
+
+
+
+
+
+
 
 
 
