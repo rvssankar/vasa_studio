@@ -1,9 +1,11 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox
+from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox,QTextEdit
 from PyQt5.QtCore import QDate,Qt
+import os
 import pyodbc
 import datetime
+from PyQt5.QtPrintSupport import QPrinter,QPrintDialog,QPrintPreviewDialog
 
 
 
@@ -364,13 +366,17 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.due_le.setEnabled(False)
         self.due_le.setText(str(0))
 
-        self.recieved_le.setText(str(0))
+        #self.recieved_le.setText(str(0))
+        self.recieved_le.setPlaceholderText(str(0))
         self.recieved_le.textChanged.connect(self.amountdue)
 
         self.cal_tool_btn.clicked.connect(self.delivery_calender)
         self.new_row_btn.clicked.connect(self.newrowbtn)
         self.remove_btn.clicked.connect(self.deleterow)
         self.save_btn.clicked.connect(self.savebtn)
+        self.clear_btn.clicked.connect(self.clearbtn)
+        self.close_btn.clicked.connect(self.closebtn)
+        self.print_btn.clicked.connect(self.printbill)
 
         self.total_le.textChanged.connect(self.amountdue)
 
@@ -571,8 +577,13 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
 
     def amountdue(self):
         print('Amount due function in')
+
+        print("the test value is ",self.total_le.text())
         totalamount = float(self.total_le.text())
-        Recievedamount = float(self.recieved_le.text())
+        if self.recieved_le.text()=="":
+            Recievedamount = float(0)
+        else:
+            Recievedamount = float(self.recieved_le.text())
         print('Amount due is ', totalamount)
         print('amoint  recoeved is ',Recievedamount)
 
@@ -666,6 +677,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.calender.deleteLater()
 
     def savebtn(self):
+
         if self.customer_le.text() =='' or self.phone_le.text()=='':
             QMessageBox.warning(self,'Warning','Please enter the customer information')
         elif self.viewtable.rowCount() ==0:
@@ -681,7 +693,11 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             customername = self.customer_le.text()
             phoneno = self.phone_le.text()
             totalamount = self.total_le.text()
-            amountreceived = self.recieved_le.text()
+            if self.recieved_le.text()=="":
+                amountreceived =0
+            else:
+                amountreceived = self.recieved_le.text()
+
             dueamount = self.due_le.text()
             deliverydate = self.delivery_date_le.text()
 
@@ -716,7 +732,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             cur.execute(ins_query,data)
             connect.commit()
             connect.close()
-            QMessageBox.information(self,'Message','Data saved successfully')
+
 
 
             # order details in order_table:
@@ -732,7 +748,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
                 print("The order_id Value is ",order_value)
             else:
                 order_value = 1
-                print('The else condition ', order_value)
+                print('The new Order Id value is ', order_value)
                 print(type(order_value))
 
             category_list =[self.viewtable.cellWidget(row,1).currentText() for row in range(self.viewtable.rowCount())]
@@ -747,16 +763,168 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             print('the qty values are', qty_list)
             print('the amount values are', amount_list)
 
-            #finding Prd_id
+            # finding Prd_id
+            prd_id_list =[]
+
+            for category , frame in zip(category_list,frame_size_list):
+                if category != 'FRAME':
+                    prd_select_query = "SELECT PROD_ID FROM dbo.PROD_DETAILS WHERE PROD_NAME =?"
+                    cur.execute(prd_select_query,category)
+                    result = cur.fetchall()
+                    print('the result value is ',result[0][0])
+                    prd_id_list.append(result[0][0])
+                else:
+                    prd_select_query= "SELECT PROD_ID FROM dbo.PROD_DETAILS WHERE PROD_NAME ='FRAME' AND SIZE =?"
+                    cur.execute(prd_select_query,frame)
+                    result=cur.fetchall()
+                    prd_id_list.append(result[0][0])
+
+            print( "The PRD_ID list values are ",prd_id_list)
+
+            # insert data into ORDER_DETAILS table:
+
+            for prd_id ,category,size,rate,qty,amount in zip(prd_id_list,category_list,frame_size_list,rate_list,qty_list,amount_list):
+                insert_qry_order_table = "INSERT INTO dbo.ORDER_DETAILS VALUES (?,?,?,?,?,?,?,?)"
+                cur.execute(insert_qry_order_table,(order_value,billno,prd_id,category,size,rate,qty,amount))
+
+            connect.commit()
+            connect.close()
+
+            self.billno = billno
+            self.customer_name = customername
+            self.phone_number =phoneno
+            self.total_amount =totalamount
+            self.amount_recieved =amountreceived
+            self.due_amount =dueamount
+            self.prod_details =category_list
+            self.prod_size =frame_size_list
+            self.qty_list =qty_list
+            self.amount_list =amount_list
+
+            QMessageBox.information(self, 'Message', 'Data saved successfully')
+            self.save_btn.setEnabled(False)
 
 
+    def clearbtn(self):
+        columns_list =[self.customer_le,self.phone_le,self.delivery_date_le]
+
+        for i in columns_list:
+            i.clear()
+
+        self.viewtable.setRowCount(0)
+
+        self.total_le.setText(str(0))
+        print("the clearbtn total amt value is ",self.total_le.text())
+        self.recieved_le.setText(str(0))
+        self.due_le.setText(str(0))
+
+    def closebtn(self):
+        self.close()
+
+    def billcontent(self):
+        folder_path ="D:\\Python\\Project\\bills\\"
+        timenow = datetime.datetime.now()
+        year = str(timenow.year)
+        month = timenow.strftime("%B")
+        print("the year is", year)
+        print("the month is ", month)
+        time = str(timenow.strftime("%H-%M"))
+        footer_time = str(timenow.strftime("%I:%M %p"))
+        print("the footer time is ", footer_time)
+        today = datetime.date.today()
+
+        bill_number = str(self.billno)
+        cust_name = self.customer_name
+        place = 'Mannargudi'
+        lines ="\n===================================================================="
+        today_date = today.strftime("%d/%m/%Y")
+
+        product = self.prod_details
+        size = self.prod_size
+        qty = self.qty_list
+        amount = self.amount_list
+        total_amount = self.total_amount
+        amount_paid = self.amount_recieved
+        amount_due = self.due_amount
+
+        print("the time is ", time, " and the format is ", type(time))
+
+        folder = folder_path+year+"\\"+month+"\\"+str(today) + '\\'
+        filename = str(folder) + "Daily_Bill_" + str(time) + ".rtf"
 
 
+        print("the file name is ", filename)
 
+        if not os.path.exists(folder):
+            os.makedirs(folder)
 
+        file = open(filename, 'w+')
 
+        # file = open('D:/Python/bills/2019-12-30/Daily_Bill_16:49:50.docx','w+')
 
+        # file =open('C:\\bill\\Daily_Bill.rtf','w')
 
+        header = "\n\n\t\t\t\t VASA PHOTOGRAPHY"
+        address1 = "\n\t\t\t   No.100, Balakrishna Nagar,"
+        address2 = "\n\t\t\t\tKeerthi Clinic [opp],"
+        address3 = "\n\t\t\t\t Mannargudi -614001"
+        address4 = "\n\n Phone: 9944332270"
+        address5 = "\t\t\t\tEmail: vasaclicks@gmail.com"
+        title = "\n\n\t\t\t\t\t\"CASH BILL\"\n===================================================================="
+        bill_section = "\n\n Bill No\t: " + bill_number + "\t\t\t\tName  : " + cust_name
+        bill_section2 = "\n Date\t\t: " + today_date + "\t\t\tAddr  : " + place + "\n\n===================================================================="
+        table_header = "\n SL.No\tPRODUCT\t\t\tSIZE\t\tQTY\t\tAMOUNT\n===================================================================="
+
+        final = header + address1 + address2 + address3 + address4 + address5 + title + bill_section + bill_section2 + table_header
+        file.write(final)
+
+        slno = 1
+        table_data=''
+
+        for prd, size, qty, amt in zip(product, size, qty, amount):
+            if len(prd) < 6 and prd != 'FRAME':
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t\t" + size + "\t\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            elif len(prd) > 5 and prd != 'FRAME':
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t" + size + "\t\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            elif prd == 'FRAME' and len(size) > 5:
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t\t" + size + "\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            else:
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t\t" + size + "\t\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            slno += 1
+            table_data =table_data+table_value
+        file.write(lines)
+
+        footer1 = "\n\n  TIME  :" + footer_time + "\t\t\t\t\tSUB TOTAL\t:\t" + str(float(total_amount))
+        footer2 = "\n\t\t\t\t\t\t\tAMT.PAID\t:\t" + str(float(amount_paid))
+        footer3 = "\n  SIGN  :\t\t\t\t\t\tAMT.DUE\t:\t" + str(float(amount_due))
+
+        footer_final = footer1 + footer2 + footer3
+
+        file.write(footer_final)
+        file.write(lines)
+
+        message = "\n\t\t*** THANK YOU... PLEASE VISIT US AGAIN ***"
+        file.write(message)
+
+        self.file_name =filename
+
+        file.close()
+
+    def printbill(self):
+        print("the save btn status is ",self.save_btn.isEnabled())
+        if not self.save_btn.isEnabled():
+            self.billcontent()
+            os.startfile(self.file_name,'print')
+        else:
+            QMessageBox.warning(self,'Warning','Please save the data first before printing the bill.')
 
 
 
