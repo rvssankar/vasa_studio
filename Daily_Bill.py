@@ -1,6 +1,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox,QTextEdit
+from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox
 from PyQt5.QtCore import QDate,Qt
 import os
 import pyodbc

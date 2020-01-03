@@ -7,6 +7,7 @@ from Admin_changepassword import Admin_Password_Change
 from Staff_changepassword import Staff_Password_Change
 from Add_Staff import Add_Staff_Window
 from Add_Product import Add_Product_window
+from Daily_Bill import Add_Daily_Bill
 import sys
 
 
@@ -88,6 +89,7 @@ class Mainwindow(QMainWindow):
         staff_change.triggered.connect(self.staff_change_password)
         Add_staff.triggered.connect(self.add_staff)
         Add_product.triggered.connect(self.add_product)
+        dailybill.triggered.connect(self.daily_bill)
         exit.triggered.connect(self.close)
         logout.triggered.connect(self.logout)
 
@@ -146,6 +148,10 @@ class Mainwindow(QMainWindow):
 
     def add_product(self):
         dialog = Add_Product_window()
+        dialog.exec_()
+
+    def daily_bill(self):
+        dialog =Add_Daily_Bill()
         dialog.exec_()
 
 
