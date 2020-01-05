@@ -585,7 +585,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         else:
             Recievedamount = float(self.recieved_le.text())
         print('Amount due is ', totalamount)
-        print('amoint  recoeved is ',Recievedamount)
+        print('amoint  recieved is ',Recievedamount)
 
         balance = float(totalamount-Recievedamount )
 

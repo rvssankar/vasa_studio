@@ -324,8 +324,15 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
 
         self.pay_le.setPlaceholderText(str(0))
         self.cal_tool.clicked.connect(self.delivery_calender)
+        self.save_btn.clicked.connect(self.savebtn)
+
+        self.pay_le.textChanged.connect(self.amountdue)
         self.current_date()
-        #self.table_records()
+        self.connectdb()
+
+
+
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(QtCore.Qt.Key_Tab),self.bill_le, context=QtCore.Qt.WidgetWithChildrenShortcut, activated =self.bill_value_fetch)
 
     def connectdb(self):
         global cur
@@ -367,11 +374,20 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         self.calender.deleteLater()
 
     def table_records(self):
-        #self.viewtable.setRowCount(0)
-        #header_label = ['Sl.No', 'Category', 'Size', 'Rate', 'Qty', 'Amount', 'Date']
+        self.viewtable.setRowCount(0)
+        self.viewtable.setColumnCount(7)
+        header_label = ['Sl.No', 'Category', 'Size', 'Rate', 'Qty', 'Amount', 'Date']
         self.viewtable.verticalHeader().setVisible(False)
-        #self.viewtable.setHorizontalHeaderLabels(header_label)
+        self.viewtable.setHorizontalHeaderLabels(header_label)
+        for i in range(0,7):
+            self.viewtable.horizontalHeaderItem(i).setTextAlignment(Qt.AlignCenter)
         header = self.viewtable.horizontalHeader()
+        font = QtGui.QFont()
+        font.setFamily("Calibri")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        header.setFont(font)
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
@@ -381,6 +397,129 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         header.setSectionResizeMode(6, QtWidgets.QHeaderView.Stretch)
         header.setStyleSheet("QHeaderView::section { border: 1px solid ;}")
 
+    def bill_value_fetch(self):
+        print("This function get passed")
+        bill_no = self.bill_le.text()
+        print('The bill no is ',bill_no)
+        self.table_records()
+
+        select_query = "SELECT ORD.CATEGORY,ORD.SIZE,ORD.RATE,ORD.QTY,ORD.TOTAL_AMOUNT,BILL.BILLING_DATE,\
+                        BILL.TOTAL_AMOUNT,BILL.AMOUNT_RECIEVED,BILL.AMOUNT_DUE\
+                        FROM DBO.ORDER_DETAILS ORD INNER JOIN DBO.BILLING_TABLE BILL ON\
+                        ORD.BILL_NO = BILL.BILL_NO\
+                        AND BILL.BILL_NO = ? "
+        cur.execute(select_query,bill_no)
+
+        result = cur.fetchall()
+
+        new_result =[]
+
+        for i in range(len(result)):
+            tuple_value = result[i]
+            tuple_value =list(tuple_value)
+            tuple_value[5] = tuple_value[5].strftime('%d/%m/%Y')
+            tuple_value =[ str(value)for value in tuple_value if type(value)!='str']
+            print('the modified tuple value is ', tuple_value)
+            new_result.append(tuple_value)
+
+        print('The new result value is ',new_result)
+
+        print ("the length is ",len(new_result))
+        print("the column range is ",range(self.viewtable.columnCount()))
+        print("the row range is ", range(len(new_result)))
+        for row in range(0,len(new_result)):
+            self.viewtable.insertRow(row)
+            self.viewtable.setItem(row,0,self.table_item(str(row+1),Qt.ItemIsSelectable | Qt.ItemIsEnabled))
+            for column in range(1,self.viewtable.columnCount()):
+                print(' the result value for '+str(row-1)+ ' and ' +str(column)+ ' is ', new_result[(row-1)][(column-1)])
+                value =new_result[(row-1)][(column-1)]
+                print ('the value is ',value, ' and type is ',type(value))
+                self.viewtable.setItem(row, column, self.table_item(value,Qt.ItemIsSelectable | Qt.ItemIsEnabled))
+                print ('The value inserted in row ',row,' and column ',column,' is :',new_result[(row-1)][(column-1)])
+
+        bill_select_query = "SELECT CUSTOMER_NAME,PHONE_NO,DELIVERY_DATE FROM \
+                            dbo.BILLING_TABLE WHERE BILL_TYPE='DAILY' AND BILL_NO =?"
+
+        cur.execute(bill_select_query,bill_no)
+
+        bill_result = cur.fetchall()
+
+        print(" The bill result value is",bill_result)
+        bill_tuple_list =list(bill_result[0])
+        print("the new bill result is ",bill_tuple_list)
+        bill_tuple_list[2]=bill_tuple_list[2].strftime('%d/%m/%Y')
+        bill_tuple_list = [ str(data) for data in bill_tuple_list if type(data)!= 'str']
+        print ("the new value for bill list is ",bill_tuple_list)
+
+        db_total_amount = new_result[0][6]
+        db_amount_recieved =new_result[0][7]
+        db_amount_due =new_result[0][8]
+        db_customer_name = bill_tuple_list[0]
+        db_phone_no = bill_tuple_list[1]
+        db_delivery_date = bill_tuple_list[2]
+
+        self.total_le.setText(db_total_amount)
+        self.recieved_le.setText(db_amount_recieved)
+        self.due_le.setText(db_amount_due)
+        self.customer_le.setText(db_customer_name)
+        self.phone_le.setText(db_phone_no)
+        self.delivery_date_le.setText(db_delivery_date)
+
+
+    def table_item(self,text,flag):
+
+        tablewidgetitem = QTableWidgetItem(text)
+        tablewidgetitem.setFlags(flag)
+        return tablewidgetitem
+
+    def amountdue(self):
+
+        print('Amount due function in')
+
+        print("the test value is ",self.due_le.text())
+        amount_due = float(self.due_le.text())
+        if self.pay_le.text()=="":
+            Recievedamount = float(0)
+        else:
+            Recievedamount = float(self.pay_le.text())
+        print('Amount due is ', amount_due)
+        print('amount  recieved is ',Recievedamount)
+
+        balance = float(amount_due-Recievedamount )
+
+        print('The balanced amount is ',balance)
+
+        self.balance_le.setText(str(balance))
+
+    def savebtn(self):
+        billno = int(self.bill_le.text())
+        customer_name = self.customer_le.text()
+        phone_no = self.phone_le.text()
+        delivery_date =self.delivery_date_le.text()
+        amount_paid_now = self.pay_le.text()
+        amount_recieved_prev = int(float(self.recieved_le.text()))
+
+        print ('amount paid now is ',amount_paid_now)
+        print('amount paid previous is ', amount_recieved_prev)
+
+        amount_recieved = int(amount_recieved_prev + int(amount_paid_now))
+
+        print('amount received sum is',amount_recieved)
+
+        amount_due = float(self.balance_le.text())
+        int_phone_no = int(phone_no)
+
+        delivery_date = datetime.datetime.strptime(delivery_date,'%d/%m/%Y').date()
+        int_amount_due = int(amount_due)
+
+        update_query ="UPDATE dbo.BILLING_TABLE SET CUSTOMER_NAME =?,PHONE_NO =?,DELIVERY_DATE =?,\
+                        AMOUNT_RECIEVED=?,AMOUNT_DUE=? WHERE BILL_NO =? AND BILL_TYPE='DAILY'"
+        update_data = [customer_name,int_phone_no,delivery_date,amount_recieved,int_amount_due,billno]
+        print("the update data is ",update_data)
+
+        cur.execute(update_query,update_data)
+
+        connect.commit()
 
 
 
