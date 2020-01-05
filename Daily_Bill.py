@@ -384,6 +384,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.bill_generator()
         self.current_date()
         self.table_records()
+        self.connectdb()
         #self.totalamount()
 
 
@@ -607,7 +608,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.combolist = set()
         self.framelist =set()
         sel_query ='SELECT PROD_NAME from dbo.PROD_DETAILS'
-        self.connectdb()
+        #self.connectdb()
         cur.execute(sel_query)
         result= cur.fetchall()
 
@@ -632,7 +633,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
 
     def bill_generator(self):
         sel_query ='SELECT MAX(BILL_NO) FROM dbo.BILLING_TABLE'
-        self.connectdb()
+        #self.connectdb()
         cur.execute(sel_query)
         result = cur.fetchall()
         value = result[0][0]
@@ -738,7 +739,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             # order details in order_table:
 
             max_order_id_query = " SELECT MAX(ORDER_ID) FROM DBO.ORDER_DETAILS"
-            self.connectdb()
+            #self.connectdb()
             cur.execute(max_order_id_query)
             result = cur.fetchall()
             order_value = result[0][0]
@@ -819,6 +820,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.due_le.setText(str(0))
 
     def closebtn(self):
+        connect.close()
         self.close()
 
     def billcontent(self):
