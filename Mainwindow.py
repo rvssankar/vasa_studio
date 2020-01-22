@@ -7,6 +7,7 @@ from Admin_changepassword import Admin_Password_Change
 from Staff_changepassword import Staff_Password_Change
 from Add_Staff import Add_Staff_Window
 from Add_Product import Add_Product_window
+from Add_Function_Product import Add_Function_Product_window
 from Daily_Bill import Add_Daily_Bill
 import sys
 
@@ -56,7 +57,8 @@ class Mainwindow(QMainWindow):
         admin_change = QAction('Admin Password',self)
         staff_change = QAction('Staff Password',self)
         Add_staff = QAction('Add Staff',self)
-        Add_product = QAction('Add Product',self)
+        Add_daily_product = QAction('Add Daily Product',self)
+        Add_function_product = QAction('Add Function Product', self)
         exit = QAction('Exit',self)
         logout = QAction('Logout',self)
         dailybill = QAction('Daily Bill',self)
@@ -81,14 +83,16 @@ class Mainwindow(QMainWindow):
 
         exitmenu.addAction(exit)
         logoutmenu.addAction(logout)
-        prodcostmenu.addAction(Add_product)
+        prodcostmenu.addAction(Add_daily_product)
+        prodcostmenu.addAction(Add_function_product)
 
         admin.triggered.connect(self.adminpage)
         staff.triggered.connect(self.staffpage)
         admin_change.triggered.connect(self.admin_change_password)
         staff_change.triggered.connect(self.staff_change_password)
         Add_staff.triggered.connect(self.add_staff)
-        Add_product.triggered.connect(self.add_product)
+        Add_daily_product.triggered.connect(self.add_product)
+        Add_function_product.triggered.connect(self.add_function_product)
         dailybill.triggered.connect(self.daily_bill)
         exit.triggered.connect(self.close)
         logout.triggered.connect(self.logout)
@@ -148,6 +152,10 @@ class Mainwindow(QMainWindow):
 
     def add_product(self):
         dialog = Add_Product_window()
+        dialog.exec_()
+
+    def add_function_product(self):
+        dialog = Add_Function_Product_window()
         dialog.exec_()
 
     def daily_bill(self):

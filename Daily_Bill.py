@@ -752,6 +752,8 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
                 print('The new Order Id value is ', order_value)
                 print(type(order_value))
 
+
+
             category_list =[self.viewtable.cellWidget(row,1).currentText() for row in range(self.viewtable.rowCount())]
             frame_size_list = [self.viewtable.cellWidget(row,2).currentText() for row in range(self.viewtable.rowCount())]
             rate_list = [self.viewtable.item(row,3).text() for row in range(self.viewtable.rowCount())]

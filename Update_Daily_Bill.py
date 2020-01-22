@@ -325,6 +325,7 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         self.pay_le.setPlaceholderText(str(0))
         self.cal_tool.clicked.connect(self.delivery_calender)
         self.save_btn.clicked.connect(self.savebtn)
+        self.print_btn.clicked.connect(self.printbill)
 
         self.pay_le.textChanged.connect(self.amountdue)
         self.current_date()
@@ -499,6 +500,9 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         amount_paid_now = self.pay_le.text()
         amount_recieved_prev = int(float(self.recieved_le.text()))
 
+        if amount_paid_now =='':
+            amount_paid_now = '0'
+
         print ('amount paid now is ',amount_paid_now)
         print('amount paid previous is ', amount_recieved_prev)
 
@@ -506,6 +510,8 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
 
         print('amount received sum is',amount_recieved)
 
+        if self.balance_le.text()=='':
+            self.balance_le.setText('0')
         amount_due = float(self.balance_le.text())
         int_phone_no = int(phone_no)
 
@@ -518,9 +524,148 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         print("the update data is ",update_data)
 
         cur.execute(update_query,update_data)
-
         connect.commit()
 
+        category_list = [self.viewtable.item(row, 1).text() for row in range(self.viewtable.rowCount())]
+        frame_size_list = [self.viewtable.item(row, 2).text() for row in range(self.viewtable.rowCount())]
+        rate_list = [self.viewtable.item(row, 3).text() for row in range(self.viewtable.rowCount())]
+        qty_list = [self.viewtable.item(row, 4).text() for row in range(self.viewtable.rowCount())]
+        amount_list = [self.viewtable.item(row, 5).text() for row in range(self.viewtable.rowCount())]
+
+        self.billno = billno
+        self.customer_name = customer_name
+        self.phone_number = phone_no
+        self.total_amount = self.total_le.text()
+        self.amount_recieved = amount_paid_now
+        self.due_amount = amount_due
+        self.prod_details =category_list
+        self.prod_size =frame_size_list
+        self.qty_list =qty_list
+        self.amount_list =amount_list
+
+
+        print('the category list is',category_list)
+        print('the frame size list is ',frame_size_list)
+        print('the rate list is ',rate_list)
+        print('the qty list is',qty_list )
+        print('the amount list is ',amount_list)
+
+
+        if int(amount_due) == 0 and int(amount_paid_now) != 0:
+            QMessageBox.information(self,'Message','Bill is successfully closed')
+        else:
+            QMessageBox.information(self,'Message','Bill is updated Successfully')
+
+        self.save_btn.setEnabled(False)
+
+
+
+
+    def billcontent(self):
+        folder_path ="D:\\Python\\Project\\bills\\"
+        timenow = datetime.datetime.now()
+        year = str(timenow.year)
+        month = timenow.strftime("%B")
+        print("the year is", year)
+        print("the month is ", month)
+        time = str(timenow.strftime("%H-%M"))
+        footer_time = str(timenow.strftime("%I:%M %p"))
+        print("the footer time is ", footer_time)
+        today = datetime.date.today()
+
+        bill_number = str(self.billno)
+        cust_name = self.customer_name
+        place = 'Mannargudi'
+        lines ="\n===================================================================="
+        today_date = today.strftime("%d/%m/%Y")
+
+        product = self.prod_details
+        size = self.prod_size
+        qty = self.qty_list
+        amount = self.amount_list
+        total_amount = self.total_amount
+        amount_paid = self.amount_recieved
+        amount_due = self.due_amount
+
+        print("the time is ", time, " and the format is ", type(time))
+
+        folder = folder_path+year+"\\"+month+"\\"+str(today) + '\\'
+        filename = str(folder) + "Update_Daily_Bill_" + str(time) + ".rtf"
+
+
+        print("the file name is ", filename)
+
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+        file = open(filename, 'w+')
+
+        # file = open('D:/Python/bills/2019-12-30/Daily_Bill_16:49:50.docx','w+')
+
+        # file =open('C:\\bill\\Daily_Bill.rtf','w')
+
+        header = "\n\n\t\t\t\t VASA PHOTOGRAPHY"
+        address1 = "\n\t\t\t   No.100, Balakrishna Nagar,"
+        address2 = "\n\t\t\t\tKeerthi Clinic [opp],"
+        address3 = "\n\t\t\t\t Mannargudi -614001"
+        address4 = "\n\n Phone: 9944332270"
+        address5 = "\t\t\t\tEmail: vasaclicks@gmail.com"
+        title = "\n\n\t\t\t\t\t\"CASH BILL\"\n===================================================================="
+        bill_section = "\n\n Bill No\t: " + bill_number + "\t\t\t\tName  : " + cust_name
+        bill_section2 = "\n Date\t\t: " + today_date + "\t\t\tAddr  : " + place + "\n\n===================================================================="
+        table_header = "\n SL.No\tPRODUCT\t\t\tSIZE\t\tQTY\t\tAMOUNT\n===================================================================="
+
+        final = header + address1 + address2 + address3 + address4 + address5 + title + bill_section + bill_section2 + table_header
+        file.write(final)
+
+        slno = 1
+        table_data=''
+
+        for prd, size, qty, amt in zip(product, size, qty, amount):
+            if len(prd) < 6 and prd != 'FRAME':
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t\t" + size + "\t\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            elif len(prd) > 5 and prd != 'FRAME':
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t" + size + "\t\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            elif prd == 'FRAME' and len(size) > 5:
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t\t" + size + "\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            else:
+                table_value = "\n   " + str(slno) + "\t\t" + prd + "\t\t\t\t" + size + "\t\t" + str(qty) + "\t\t" + str(
+                    amt)
+                file.write(table_value)
+            slno += 1
+            table_data =table_data+table_value
+        file.write(lines)
+        netamount = 'NET AMOUNT'#'''{\\rtf1 \\b Net Amount \\b0\line\}'''
+        footer1 = "\n\n  TIME  :" + footer_time + "\t\t\t\t\tTOTAL AMT\t:\t" + str(float(total_amount))
+        footer_net_amount = "\n\n\t\t\t\t\t" +netamount+"\t\tRs. "+str(float(total_amount))
+        footer2 = "\n\t\t\t\t\t\tAMT. RECIEVED\t:\t" + str(float(amount_paid))
+        footer3 = "\n  SIGN  :\t\t\t\t\t\tAMT. DUE\t:\t" + str(float(amount_due))
+
+        footer_final = footer1 +footer_net_amount+lines+ footer2 + footer3
+
+        file.write(footer_final)
+        file.write(lines)
+
+        message = "\n\t\t*** THANK YOU... PLEASE VISIT US AGAIN ***"
+        file.write(message)
+
+        self.file_name =filename
+
+        file.close()
+
+    def printbill(self):
+        print("the save btn status is ",self.save_btn.isEnabled())
+        if not self.save_btn.isEnabled():
+            self.billcontent()
+            os.startfile(self.file_name,'print')
+        else:
+            QMessageBox.warning(self,'Warning','Please save the data first before printing the bill.')
 
 
 

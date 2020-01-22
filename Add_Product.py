@@ -184,7 +184,7 @@ class Ui_New_product_dialog(object):
         self.clear_btn.setText(_translate("New_product_dialog", "Clear"))
         self.add_btn.setText(_translate("New_product_dialog", "Add New"))
         self.toolButton.setText(_translate("New_product_dialog", "..."))
-        self.toolButton_2.setText(_translate("New_product_dialog", "New Product"))
+        self.toolButton_2.setText(_translate("New_product_dialog", "New Daily Product"))
 
 class Add_Product_window(QDialog,Ui_New_product_dialog):
     def __init__(self,parent=None):
@@ -237,12 +237,13 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
         cur = connect.cursor()
         return cur
     def newprod(self):
-        text,okpressed = QInputDialog.getText(self,'Add Produt','Product Name :',QLineEdit.Normal,"")
+        text,okpressed = QInputDialog.getText(self,'Add Product','Product Name :',QLineEdit.Normal,"")
         if okpressed and text!='':
                 value = str.upper(text)
                 self.connectdb()
-                ins_query = 'INSERT INTO dbo.PROD_DETAILS (PROD_ID,PROD_NAME) VALUES (NEXT VALUE FOR dbo.seq_prod,?)'
-                cur.execute(ins_query,value)
+                prod_type='DAILY'
+                ins_query = 'INSERT INTO dbo.PROD_DETAILS (PROD_ID,PROD_NAME,PROD_TYPE) VALUES (NEXT VALUE FOR dbo.seq_prod,?,?)'
+                cur.execute(ins_query,(value,prod_type))
                 connect.commit()
                 connect.close()
                 QMessageBox.information(self,'Information','Product '+value+' added successfully')
@@ -252,7 +253,7 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
     def combovalue(self):
         self.combolist = set('',)
 
-        sel_query ='SELECT PROD_NAME from dbo.PROD_DETAILS'
+        sel_query ="SELECT PROD_NAME from dbo.PROD_DETAILS WHERE PROD_TYPE ='DAILY'"
         self.connectdb()
         cur.execute(sel_query)
         result= cur.fetchall()
@@ -309,8 +310,9 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
                 self.rate_le.clear()
                 self.frame_size_le.clear()
             else:
-                ins_query ='INSERT INTO dbo.PROD_DETAILS VALUES (NEXT VALUE FOR dbo.seq_prod, ?,?,?)'
-                data = (cat_value,frame_size,price)
+                ins_query ='INSERT INTO dbo.PROD_DETAILS(PROD_ID,PROD_NAME,SIZE,PRICE,PROD_TYPE) VALUES (NEXT VALUE FOR dbo.seq_prod, ?,?,?,?)'
+                prod_type='DAILY'
+                data = (cat_value,frame_size,price,prod_type)
                 cur.execute(ins_query,data)
                 connect.commit()
                 connect.close()
@@ -324,24 +326,6 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
     def clearbtn(self):
         self.rate_le.clear()
         self.frame_size_le.clear()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
