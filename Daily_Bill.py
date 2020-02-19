@@ -1,6 +1,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox
+from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox,QDateEdit
 from PyQt5.QtCore import QDate,Qt
 import os
 import pyodbc
@@ -353,6 +353,8 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         super(Add_Daily_Bill,self).__init__(parent)
         self.setupUi(self)
 
+        self.setWindowTitle("Daily Bill")
+
         self.onlyint = QtGui.QIntValidator()
         self.phone_le.setValidator(self.onlyint)
         self.bill_le.setValidator(self.onlyint)
@@ -495,7 +497,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         rownum= self.viewtable.currentRow()
         curr_value = self.combo1.currentText()
         if curr_value != 'FRAME':
-            SEL_QUERY =' SELECT PRICE from dbo.PROD_DETAILS WHERE PROD_NAME =?'
+            SEL_QUERY =" SELECT PRICE from dbo.PROD_DETAILS WHERE PROD_TYPE ='DAILY' AND PROD_NAME =?"
 
             cur.execute(SEL_QUERY,curr_value)
             result = cur.fetchall()
@@ -518,7 +520,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
 
 
     def frame_rate_value(self):
-            SEL_QUERY = 'SELECT PRICE from dbo.PROD_DETAILS WHERE PROD_NAME =? AND SIZE=?'
+            SEL_QUERY = "SELECT PRICE from dbo.PROD_DETAILS WHERE PROD_TYPE ='DAILY' AND PROD_NAME =? AND SIZE=?"
             frame_curr_value = self.combo2.currentText()
             curr_value = self.combo1.currentText()
             rownum = self.viewtable.currentRow()
@@ -607,7 +609,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
     def combovalue(self):
         self.combolist = set()
         self.framelist =set()
-        sel_query ='SELECT PROD_NAME from dbo.PROD_DETAILS'
+        sel_query ="SELECT PROD_NAME from dbo.PROD_DETAILS WHERE PROD_TYPE ='DAILY'"
         self.connectdb()
         cur.execute(sel_query)
         result= cur.fetchall()
@@ -618,7 +620,7 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             self.combolist.add(x)
         self.combolist.add('NA')
 
-        frame_query = "SELECT SIZE FROM dbo.PROD_DETAILS WHERE PROD_NAME ='FRAME' AND SIZE IS NOT NULL AND SIZE !=''"
+        frame_query = "SELECT SIZE FROM dbo.PROD_DETAILS WHERE PROD_TYPE ='DAILY' AND PROD_NAME ='FRAME' AND SIZE IS NOT NULL AND SIZE !=''"
 
         cur.execute(frame_query)
         frame_result = cur.fetchall()
@@ -666,6 +668,8 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.calender.setMaximumDate(QDate(2999,12,31))
         self.calender.setGridVisible(True)
         self.calender.clicked.connect(self.updatedate)
+        self.calender.setWindowModality(Qt.ApplicationModal)
+        self.calender.setWindowTitle("Delivery Date")
 
         self.calender.show()
 
@@ -771,13 +775,13 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
 
             for category , frame in zip(category_list,frame_size_list):
                 if category != 'FRAME':
-                    prd_select_query = "SELECT PROD_ID FROM dbo.PROD_DETAILS WHERE PROD_NAME =?"
+                    prd_select_query = "SELECT PROD_ID FROM dbo.PROD_DETAILS WHERE PROD_TYPE ='DAILY' AND PROD_NAME =?"
                     cur.execute(prd_select_query,category)
                     result = cur.fetchall()
                     print('the result value is ',result[0][0])
                     prd_id_list.append(result[0][0])
                 else:
-                    prd_select_query= "SELECT PROD_ID FROM dbo.PROD_DETAILS WHERE PROD_NAME ='FRAME' AND SIZE =?"
+                    prd_select_query= "SELECT PROD_ID FROM dbo.PROD_DETAILS WHERE PROD_TYPE ='DAILY' AND PROD_NAME ='FRAME' AND SIZE =?"
                     cur.execute(prd_select_query,frame)
                     result=cur.fetchall()
                     prd_id_list.append(result[0][0])

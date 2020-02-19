@@ -313,6 +313,8 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         super(Update_Daily_Bill, self).__init__(parent)
         self.setupUi(self)
 
+        self.setWindowTitle("Update Daily Bill")
+
         self.onlyint = QtGui.QIntValidator()
         self.phone_le.setValidator(self.onlyint)
         self.bill_le.setValidator(self.onlyint)
@@ -364,6 +366,8 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         self.calender.setMaximumDate(QDate(2999,12,31))
         self.calender.setGridVisible(True)
         self.calender.clicked.connect(self.updatedate)
+        self.calender.setWindowModality(Qt.ApplicationModal)
+        self.calender.setWindowTitle("Delivery Date")
 
         self.calender.show()
 
@@ -408,63 +412,71 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
                         BILL.TOTAL_AMOUNT,BILL.AMOUNT_RECIEVED,BILL.AMOUNT_DUE\
                         FROM DBO.ORDER_DETAILS ORD INNER JOIN DBO.BILLING_TABLE BILL ON\
                         ORD.BILL_NO = BILL.BILL_NO\
-                        AND BILL.BILL_NO = ? "
+                        AND BILL.BILL_NO = ? AND BILL_TYPE ='DAILY'"
         cur.execute(select_query,bill_no)
 
         result = cur.fetchall()
 
-        new_result =[]
+        result_check =len(result)
 
-        for i in range(len(result)):
-            tuple_value = result[i]
-            tuple_value =list(tuple_value)
-            tuple_value[5] = tuple_value[5].strftime('%d/%m/%Y')
-            tuple_value =[ str(value)for value in tuple_value if type(value)!='str']
-            print('the modified tuple value is ', tuple_value)
-            new_result.append(tuple_value)
+        print('the test result value is',result_check)
 
-        print('The new result value is ',new_result)
+        if result_check >=1:
 
-        print ("the length is ",len(new_result))
-        print("the column range is ",range(self.viewtable.columnCount()))
-        print("the row range is ", range(len(new_result)))
-        for row in range(0,len(new_result)):
-            self.viewtable.insertRow(row)
-            self.viewtable.setItem(row,0,self.table_item(str(row+1),Qt.ItemIsSelectable | Qt.ItemIsEnabled))
-            for column in range(1,self.viewtable.columnCount()):
-                print(' the result value for '+str(row-1)+ ' and ' +str(column)+ ' is ', new_result[(row-1)][(column-1)])
-                value =new_result[(row-1)][(column-1)]
-                print ('the value is ',value, ' and type is ',type(value))
-                self.viewtable.setItem(row, column, self.table_item(value,Qt.ItemIsSelectable | Qt.ItemIsEnabled))
-                print ('The value inserted in row ',row,' and column ',column,' is :',new_result[(row-1)][(column-1)])
+            new_result =[]
 
-        bill_select_query = "SELECT CUSTOMER_NAME,PHONE_NO,DELIVERY_DATE FROM \
-                            dbo.BILLING_TABLE WHERE BILL_TYPE='DAILY' AND BILL_NO =?"
+            for i in range(len(result)):
+                tuple_value = result[i]
+                tuple_value =list(tuple_value)
+                tuple_value[5] = tuple_value[5].strftime('%d/%m/%Y')
+                tuple_value =[ str(value)for value in tuple_value if type(value)!='str']
+                print('the modified tuple value is ', tuple_value)
+                new_result.append(tuple_value)
 
-        cur.execute(bill_select_query,bill_no)
+            print('The new result value is ',new_result)
 
-        bill_result = cur.fetchall()
+            print ("the length is ",len(new_result))
+            print("the column range is ",range(self.viewtable.columnCount()))
+            print("the row range is ", range(len(new_result)))
+            for row in range(0,len(new_result)):
+                self.viewtable.insertRow(row)
+                self.viewtable.setItem(row,0,self.table_item(str(row+1),Qt.ItemIsSelectable | Qt.ItemIsEnabled))
+                for column in range(1,self.viewtable.columnCount()):
+                    print(' the result value for '+str(row-1)+ ' and ' +str(column)+ ' is ', new_result[(row-1)][(column-1)])
+                    value =new_result[(row-1)][(column-1)]
+                    print ('the value is ',value, ' and type is ',type(value))
+                    self.viewtable.setItem(row, column, self.table_item(value,Qt.ItemIsSelectable | Qt.ItemIsEnabled))
+                    print ('The value inserted in row ',row,' and column ',column,' is :',new_result[(row-1)][(column-1)])
 
-        print(" The bill result value is",bill_result)
-        bill_tuple_list =list(bill_result[0])
-        print("the new bill result is ",bill_tuple_list)
-        bill_tuple_list[2]=bill_tuple_list[2].strftime('%d/%m/%Y')
-        bill_tuple_list = [ str(data) for data in bill_tuple_list if type(data)!= 'str']
-        print ("the new value for bill list is ",bill_tuple_list)
+            bill_select_query = "SELECT CUSTOMER_NAME,PHONE_NO,DELIVERY_DATE FROM \
+                                dbo.BILLING_TABLE WHERE BILL_TYPE='DAILY' AND BILL_NO =?"
 
-        db_total_amount = new_result[0][6]
-        db_amount_recieved =new_result[0][7]
-        db_amount_due =new_result[0][8]
-        db_customer_name = bill_tuple_list[0]
-        db_phone_no = bill_tuple_list[1]
-        db_delivery_date = bill_tuple_list[2]
+            cur.execute(bill_select_query,bill_no)
 
-        self.total_le.setText(db_total_amount)
-        self.recieved_le.setText(db_amount_recieved)
-        self.due_le.setText(db_amount_due)
-        self.customer_le.setText(db_customer_name)
-        self.phone_le.setText(db_phone_no)
-        self.delivery_date_le.setText(db_delivery_date)
+            bill_result = cur.fetchall()
+
+            print(" The bill result value is",bill_result)
+            bill_tuple_list =list(bill_result[0])
+            print("the new bill result is ",bill_tuple_list)
+            bill_tuple_list[2]=bill_tuple_list[2].strftime('%d/%m/%Y')
+            bill_tuple_list = [ str(data) for data in bill_tuple_list if type(data)!= 'str']
+            print ("the new value for bill list is ",bill_tuple_list)
+
+            db_total_amount = new_result[0][6]
+            db_amount_recieved =new_result[0][7]
+            db_amount_due =new_result[0][8]
+            db_customer_name = bill_tuple_list[0]
+            db_phone_no = bill_tuple_list[1]
+            db_delivery_date = bill_tuple_list[2]
+
+            self.total_le.setText(db_total_amount)
+            self.recieved_le.setText(db_amount_recieved)
+            self.due_le.setText(db_amount_due)
+            self.customer_le.setText(db_customer_name)
+            self.phone_le.setText(db_phone_no)
+            self.delivery_date_le.setText(db_delivery_date)
+        else:
+            QMessageBox.warning(self,'Error','Please enter correct Bill No.')
 
 
     def table_item(self,text,flag):

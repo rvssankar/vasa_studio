@@ -9,6 +9,12 @@ from Add_Staff import Add_Staff_Window
 from Add_Product import Add_Product_window
 from Add_Function_Product import Add_Function_Product_window
 from Daily_Bill import Add_Daily_Bill
+from Update_Daily_Bill import Update_Daily_Bill
+from New_Function_Bill import Add_Function_Bill
+from Update_Function_Bill import Update_Function_Bill
+from Expenses import Add_Expenses
+from Work_Allocate import  Work_Allocate_Page
+from Work_Finish import  Work_Finish_Window
 import sys
 
 
@@ -65,6 +71,10 @@ class Mainwindow(QMainWindow):
         updatedaily=QAction('Update Daily Bill',self)
         functionbill = QAction('Function Bill',self)
         updatefuncbill = QAction('Update Function Bill',self)
+        add_expense = QAction('Add Expense',self)
+        work_allocate = QAction('Allocate Work Orders',self)
+        work_pending = QAction('Pending Work Orders',self)
+        work_complete = QAction('Completed Work Orders',self)
 
 
 
@@ -78,8 +88,13 @@ class Mainwindow(QMainWindow):
         custbillmenu.addAction(updatedaily)
         custbillmenu.addAction(functionbill)
         custbillmenu.addAction(updatefuncbill)
+        expensemenu.addAction(add_expense)
 
         addstaffmenu.addAction(Add_staff)
+
+        workstatsmenu.addAction(work_allocate)
+        workstatsmenu.addAction(work_pending)
+        workstatsmenu.addAction(work_complete)
 
         exitmenu.addAction(exit)
         logoutmenu.addAction(logout)
@@ -94,6 +109,12 @@ class Mainwindow(QMainWindow):
         Add_daily_product.triggered.connect(self.add_product)
         Add_function_product.triggered.connect(self.add_function_product)
         dailybill.triggered.connect(self.daily_bill)
+        updatedaily.triggered.connect(self.update_daily)
+        functionbill.triggered.connect(self.new_function)
+        updatefuncbill.triggered.connect(self.update_function)
+        add_expense.triggered.connect(self.add_expense)
+        work_allocate.triggered.connect(self.work_allocate)
+        work_pending.triggered.connect(self.work_pending)
         exit.triggered.connect(self.close)
         logout.triggered.connect(self.logout)
 
@@ -160,6 +181,30 @@ class Mainwindow(QMainWindow):
 
     def daily_bill(self):
         dialog =Add_Daily_Bill()
+        dialog.exec_()
+
+    def update_daily(self):
+        dialog =Update_Daily_Bill()
+        dialog.exec_()
+
+    def new_function(self):
+        dialog =Add_Function_Bill()
+        dialog.exec_()
+
+    def update_function(self):
+        dialog = Update_Function_Bill()
+        dialog.exec_()
+
+    def add_expense(self):
+        dialog = Add_Expenses()
+        dialog.exec_()
+
+    def work_allocate(self):
+        dialog = Work_Allocate_Page()
+        dialog.exec_()
+
+    def work_pending(self):
+        dialog = Work_Finish_Window()
         dialog.exec_()
 
 
