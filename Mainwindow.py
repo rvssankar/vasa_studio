@@ -15,6 +15,8 @@ from Update_Function_Bill import Update_Function_Bill
 from Expenses import Add_Expenses
 from Work_Allocate import  Work_Allocate_Page
 from Work_Finish import  Work_Finish_Window
+from Work_complete import Work_Complete_Page
+from Today_Report import Today_Report_Page
 import sys
 
 
@@ -75,6 +77,10 @@ class Mainwindow(QMainWindow):
         work_allocate = QAction('Allocate Work Orders',self)
         work_pending = QAction('Pending Work Orders',self)
         work_complete = QAction('Completed Work Orders',self)
+        today_report = QAction("Today's Report",self)
+        daily_bill_report = QAction("Daily Bill Report",self)
+        function_bill_report = QAction('Function Bill Report',self)
+        expense_report =QAction('Expense Report',self)
 
 
 
@@ -96,6 +102,11 @@ class Mainwindow(QMainWindow):
         workstatsmenu.addAction(work_pending)
         workstatsmenu.addAction(work_complete)
 
+        reportsmenu.addAction(today_report)
+        reportsmenu.addAction(daily_bill_report)
+        reportsmenu.addAction(function_bill_report)
+        reportsmenu.addAction(expense_report)
+
         exitmenu.addAction(exit)
         logoutmenu.addAction(logout)
         prodcostmenu.addAction(Add_daily_product)
@@ -115,6 +126,8 @@ class Mainwindow(QMainWindow):
         add_expense.triggered.connect(self.add_expense)
         work_allocate.triggered.connect(self.work_allocate)
         work_pending.triggered.connect(self.work_pending)
+        work_complete.triggered.connect(self.work_complete)
+        today_report.triggered.connect(self.today_report)
         exit.triggered.connect(self.close)
         logout.triggered.connect(self.logout)
 
@@ -205,6 +218,14 @@ class Mainwindow(QMainWindow):
 
     def work_pending(self):
         dialog = Work_Finish_Window()
+        dialog.exec_()
+
+    def work_complete(self):
+        dialog = Work_Complete_Page()
+        dialog.exec_()
+
+    def today_report(self):
+        dialog = Today_Report_Page()
         dialog.exec_()
 
 

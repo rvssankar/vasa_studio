@@ -328,6 +328,7 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         self.cal_tool.clicked.connect(self.delivery_calender)
         self.save_btn.clicked.connect(self.savebtn)
         self.print_btn.clicked.connect(self.printbill)
+        self.close_btn.clicked.connect(self.closebtn)
 
         self.pay_le.textChanged.connect(self.amountdue)
         self.current_date()
@@ -678,6 +679,9 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
             os.startfile(self.file_name,'print')
         else:
             QMessageBox.warning(self,'Warning','Please save the data first before printing the bill.')
+
+    def closebtn(self):
+        self.close()
 
 
 

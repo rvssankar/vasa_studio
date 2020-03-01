@@ -729,9 +729,9 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
             sql_order_date = orderdate.strftime("%d/%m/%Y")
             sql_delivery_date = deliverydate.strftime("%d/%m/%Y")
 
-            ins_query = 'INSERT INTO dbo.BILLING_TABLE VALUES(?,?,?,?,?,?,?,?,?)'
+            ins_query = 'INSERT INTO dbo.BILLING_TABLE VALUES(?,?,?,?,?,?,?,?,?,?)'
             ins_query1 = "INSERT INTO dbo.BILLING_TABLE (BILL_NO,CUSTOMER_NAME,PHONE_NO,BILLING_DATE,DELIVERY_DATE,TOTAL_AMOUNT) VALUES(?,?,?,?,?,?)"
-            data = (billno,customername,phoneno,orderdate,deliverydate,totalamount,amountreceived,dueamount,bill_type)
+            data = (billno,customername,phoneno,orderdate,deliverydate,totalamount,amountreceived,dueamount,None,bill_type)
             data1 = (billno, customername, phoneno, orderdate,deliverydate, totalamount)
 
             cur.execute(ins_query,data)

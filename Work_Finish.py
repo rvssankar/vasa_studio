@@ -188,6 +188,8 @@ class Work_Finish_Window(QDialog,Ui_finish_window):
 
         self.setupUi(self)
 
+        self.setWindowTitle("Work Progress")
+
         self.table_records()
         self.table_population()
 

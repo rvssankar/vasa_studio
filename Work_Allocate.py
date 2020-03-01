@@ -203,6 +203,8 @@ class Work_Allocate_Page (QDialog,Ui_allocate_window):
 
         self.setupUi(self)
 
+        self.setWindowTitle("Work Allocate")
+
 
         self.table_records()
         self.table_population()
