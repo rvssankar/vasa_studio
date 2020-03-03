@@ -157,53 +157,58 @@ class Ui_Daily_bill(object):
         self.viewtable.setHorizontalHeaderItem(5, item)
         self.remove_btn = QtWidgets.QPushButton(self.table_frame)
         self.remove_btn.setGeometry(QtCore.QRect(20, 320, 101, 41))
-        self.remove_btn.setStyleSheet("background-color: rgb(202, 66, 68);\n"
+        self.remove_btn.setStyleSheet("#remove_btn{background-color: rgb(202, 66, 68);\n"
 "font: 75 10pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#remove_btn:pressed{border-style:solid;border-width:6px}"                                      )
         self.remove_btn.setObjectName("remove_btn")
         self.save_btn = QtWidgets.QPushButton(self.table_frame)
         self.save_btn.setGeometry(QtCore.QRect(20, 430, 111, 51))
-        self.save_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.save_btn.setStyleSheet("#save_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#save_btn:pressed{border-style:solid;border-width:6px}"                                    )
         self.save_btn.setObjectName("save_btn")
         self.print_btn = QtWidgets.QPushButton(self.table_frame)
         self.print_btn.setGeometry(QtCore.QRect(160, 430, 111, 51))
-        self.print_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(153, 228, 156, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.print_btn.setStyleSheet("#print_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(153, 228, 156, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#print_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.print_btn.setObjectName("print_btn")
         self.clear_btn = QtWidgets.QPushButton(self.table_frame)
         self.clear_btn.setGeometry(QtCore.QRect(302, 430, 111, 51))
-        self.clear_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.clear_btn.setStyleSheet("#clear_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#clear_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.clear_btn.setObjectName("clear_btn")
         self.close_btn = QtWidgets.QPushButton(self.table_frame)
         self.close_btn.setGeometry(QtCore.QRect(442, 430, 111, 51))
-        self.close_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.close_btn.setStyleSheet("#close_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#close_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.close_btn.setObjectName("close_btn")
         self.total_label = QtWidgets.QLabel(self.table_frame)
         self.total_label.setGeometry(QtCore.QRect(654, 343, 221, 41))
@@ -264,13 +269,14 @@ class Ui_Daily_bill(object):
         self.line_3.setObjectName("line_3")
         self.new_row_btn = QtWidgets.QPushButton(self.table_frame)
         self.new_row_btn.setGeometry(QtCore.QRect(160, 320, 101, 41))
-        self.new_row_btn.setStyleSheet("background-color: green;\n"
+        self.new_row_btn.setStyleSheet("#new_row_btn{background-color: green;\n"
 "font: 75 10pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#new_row_btn:pressed{border-style:solid;border-width:6px}"                                       )
         self.new_row_btn.setObjectName("new_row_btn")
         self.cal_tool_btn = QtWidgets.QToolButton(Daily_bill)
         self.cal_tool_btn.setGeometry(QtCore.QRect(1159, 97, 30, 32))

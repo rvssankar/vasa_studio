@@ -138,33 +138,36 @@ class Ui_expense_dialog(object):
         self.description_te.setObjectName("description_te")
         self.save_btn = QtWidgets.QPushButton(self.content_frame)
         self.save_btn.setGeometry(QtCore.QRect(30, 480, 121, 61))
-        self.save_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.save_btn.setStyleSheet("#save_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#save_btn:pressed{border-style:solid;border-width:6px}"                                    )
         self.save_btn.setObjectName("save_btn")
         self.clear_btn = QtWidgets.QPushButton(self.content_frame)
         self.clear_btn.setGeometry(QtCore.QRect(190, 480, 121, 61))
-        self.clear_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.clear_btn.setStyleSheet("#clear_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#clear_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.clear_btn.setObjectName("clear_btn")
         self.close_btn = QtWidgets.QPushButton(self.content_frame)
         self.close_btn.setGeometry(QtCore.QRect(350, 480, 121, 61))
-        self.close_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.close_btn.setStyleSheet("#close_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#close_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.close_btn.setObjectName("close_btn")
         self.table_frame = QtWidgets.QFrame(expense_dialog)
         self.table_frame.setGeometry(QtCore.QRect(540, 190, 651, 591))
@@ -238,13 +241,14 @@ class Ui_expense_dialog(object):
         self.expense_table.setHorizontalHeaderItem(4, item)
         self.show_btn = QtWidgets.QPushButton(self.table_frame)
         self.show_btn.setGeometry(QtCore.QRect(250, 530, 131, 41))
-        self.show_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.show_btn.setStyleSheet("#show_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#show_btn:pressed{border-style:solid;border-width:6px}"                                    )
         self.show_btn.setObjectName("show_btn")
         self.frame = QtWidgets.QFrame(expense_dialog)
         self.frame.setGeometry(QtCore.QRect(0, 0, 1231, 91))

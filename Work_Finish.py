@@ -145,13 +145,14 @@ class Ui_finish_window(object):
         self.bill_label.setObjectName("bill_label")
         self.finish_btn = QtWidgets.QPushButton(finish_window)
         self.finish_btn.setGeometry(QtCore.QRect(670, 730, 231, 81))
-        self.finish_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.finish_btn.setStyleSheet("#finish_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:40px;\n"
 "border-style:outset;\n"
 "border-width:5px;\n"
 "border-color:green;\n"
-"font:bold;")
+"font:bold;} \n"
+"#finish_btn:pressed{border-style:solid;border-width:9px}"                                      )
         self.finish_btn.setObjectName("finish_btn")
 
         self.retranslateUi(finish_window)

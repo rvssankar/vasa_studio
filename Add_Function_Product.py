@@ -98,12 +98,13 @@ class Ui_New_product_dialog(object):
         font.setItalic(False)
         font.setWeight(75)
         self.save_btn.setFont(font)
-        self.save_btn.setStyleSheet("background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(26, 204, 57, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.save_btn.setStyleSheet("#save_btn{background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(26, 204, 57, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#save_btn:pressed{border-style:solid;border-width:6px}"                                    )
         self.save_btn.setObjectName("save_btn")
         self.clear_btn = QtWidgets.QPushButton(self.Add_prod_frame)
         self.clear_btn.setGeometry(QtCore.QRect(330, 360, 131, 61))
@@ -113,12 +114,13 @@ class Ui_New_product_dialog(object):
         font.setItalic(False)
         font.setWeight(75)
         self.clear_btn.setFont(font)
-        self.clear_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(204, 188, 26, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.clear_btn.setStyleSheet("#clear_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(204, 188, 26, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#clear_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.clear_btn.setObjectName("clear_btn")
         self.add_btn = QtWidgets.QPushButton(self.Add_prod_frame)
         self.add_btn.setGeometry(QtCore.QRect(30, 290, 171, 41))
@@ -128,12 +130,13 @@ class Ui_New_product_dialog(object):
         font.setItalic(False)
         font.setWeight(75)
         self.add_btn.setFont(font)
-        self.add_btn.setStyleSheet("background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 120, 204, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.add_btn.setStyleSheet("#add_btn{background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 120, 204, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#add_btn:pressed{border-style:solid;border-width:6px}"                                   )
         self.add_btn.setObjectName("add_btn")
         '''self.toolButton = QtWidgets.QToolButton(self.Add_prod_frame)
         self.toolButton.setGeometry(QtCore.QRect(435, 110, 141, 141))
@@ -168,12 +171,13 @@ class Ui_New_product_dialog(object):
         font.setItalic(False)
         font.setWeight(75)
         self.add_btn_2.setFont(font)
-        self.add_btn_2.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(100, 9, 85, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.add_btn_2.setStyleSheet("#add_btn_2{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(100, 9, 85, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#add_btn_2:pressed{border-style:solid;border-width:6px}"                                     )
         self.add_btn_2.setObjectName("add_btn_2")
         self.toolButton_2 = QtWidgets.QToolButton(New_product_dialog)
         self.toolButton_2.setGeometry(QtCore.QRect(160, 50, 371, 81))

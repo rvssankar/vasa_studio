@@ -105,43 +105,47 @@ class Ui_Update_Daily_bill(object):
         self.viewtable.setColumnCount(0)
         self.save_btn = QtWidgets.QPushButton(self.table_frame)
         self.save_btn.setGeometry(QtCore.QRect(70, 353, 141, 71))
-        self.save_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.save_btn.setStyleSheet("#save_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#save_btn:pressed{border-style:solid;border-width:6px}"                                    )
         self.save_btn.setObjectName("save_btn")
         self.print_btn = QtWidgets.QPushButton(self.table_frame)
         self.print_btn.setGeometry(QtCore.QRect(420, 353, 141, 71))
-        self.print_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(153, 228, 156, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.print_btn.setStyleSheet("#print_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(153, 228, 156, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#print_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.print_btn.setObjectName("print_btn")
         self.delete_btn = QtWidgets.QPushButton(self.table_frame)
         self.delete_btn.setGeometry(QtCore.QRect(70, 463, 141, 71))
-        self.delete_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.delete_btn.setStyleSheet("#delete_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#delete_btn:pressed{border-style:solid;border-width:6px}"                                      )
         self.delete_btn.setObjectName("delete_btn")
         self.close_btn = QtWidgets.QPushButton(self.table_frame)
         self.close_btn.setGeometry(QtCore.QRect(420, 463, 141, 71))
-        self.close_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.close_btn.setStyleSheet("#close_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#close_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.close_btn.setObjectName("close_btn")
         self.total_label = QtWidgets.QLabel(self.table_frame)
         self.total_label.setGeometry(QtCore.QRect(654, 322, 221, 41))
@@ -506,70 +510,73 @@ class Update_Daily_Bill(QDialog,Ui_Update_Daily_bill):
         self.balance_le.setText(str(balance))
 
     def savebtn(self):
-        billno = int(self.bill_le.text())
-        customer_name = self.customer_le.text()
-        phone_no = self.phone_le.text()
-        delivery_date =self.delivery_date_le.text()
-        amount_paid_now = self.pay_le.text()
-        amount_recieved_prev = int(float(self.recieved_le.text()))
+        if self.bill_le.text()!="":
+            billno = int(self.bill_le.text())
+            customer_name = self.customer_le.text()
+            phone_no = self.phone_le.text()
+            delivery_date =self.delivery_date_le.text()
+            amount_paid_now = self.pay_le.text()
+            amount_recieved_prev = int(float(self.recieved_le.text()))
 
-        if amount_paid_now =='':
-            amount_paid_now = '0'
+            if amount_paid_now =='':
+                amount_paid_now = '0'
 
-        print ('amount paid now is ',amount_paid_now)
-        print('amount paid previous is ', amount_recieved_prev)
+            print ('amount paid now is ',amount_paid_now)
+            print('amount paid previous is ', amount_recieved_prev)
 
-        amount_recieved = int(amount_recieved_prev + int(amount_paid_now))
+            amount_recieved = int(amount_recieved_prev + int(amount_paid_now))
 
-        print('amount received sum is',amount_recieved)
+            print('amount received sum is',amount_recieved)
 
-        if self.balance_le.text()=='':
-            self.balance_le.setText('0')
-        amount_due = float(self.balance_le.text())
-        int_phone_no = int(phone_no)
+            if self.balance_le.text()=='':
+                self.balance_le.setText('0')
+            amount_due = float(self.balance_le.text())
+            int_phone_no = int(phone_no)
 
-        delivery_date = datetime.datetime.strptime(delivery_date,'%d/%m/%Y').date()
-        int_amount_due = int(amount_due)
+            delivery_date = datetime.datetime.strptime(delivery_date,'%d/%m/%Y').date()
+            int_amount_due = int(amount_due)
 
-        update_query ="UPDATE dbo.BILLING_TABLE SET CUSTOMER_NAME =?,PHONE_NO =?,DELIVERY_DATE =?,\
-                        AMOUNT_RECIEVED=?,AMOUNT_DUE=? WHERE BILL_NO =? AND BILL_TYPE='DAILY'"
-        update_data = [customer_name,int_phone_no,delivery_date,amount_recieved,int_amount_due,billno]
-        print("the update data is ",update_data)
+            update_query ="UPDATE dbo.BILLING_TABLE SET CUSTOMER_NAME =?,PHONE_NO =?,DELIVERY_DATE =?,\
+                            AMOUNT_RECIEVED=?,AMOUNT_DUE=? WHERE BILL_NO =? AND BILL_TYPE='DAILY'"
+            update_data = [customer_name,int_phone_no,delivery_date,amount_recieved,int_amount_due,billno]
+            print("the update data is ",update_data)
 
-        cur.execute(update_query,update_data)
-        connect.commit()
+            cur.execute(update_query,update_data)
+            connect.commit()
 
-        category_list = [self.viewtable.item(row, 1).text() for row in range(self.viewtable.rowCount())]
-        frame_size_list = [self.viewtable.item(row, 2).text() for row in range(self.viewtable.rowCount())]
-        rate_list = [self.viewtable.item(row, 3).text() for row in range(self.viewtable.rowCount())]
-        qty_list = [self.viewtable.item(row, 4).text() for row in range(self.viewtable.rowCount())]
-        amount_list = [self.viewtable.item(row, 5).text() for row in range(self.viewtable.rowCount())]
+            category_list = [self.viewtable.item(row, 1).text() for row in range(self.viewtable.rowCount())]
+            frame_size_list = [self.viewtable.item(row, 2).text() for row in range(self.viewtable.rowCount())]
+            rate_list = [self.viewtable.item(row, 3).text() for row in range(self.viewtable.rowCount())]
+            qty_list = [self.viewtable.item(row, 4).text() for row in range(self.viewtable.rowCount())]
+            amount_list = [self.viewtable.item(row, 5).text() for row in range(self.viewtable.rowCount())]
 
-        self.billno = billno
-        self.customer_name = customer_name
-        self.phone_number = phone_no
-        self.total_amount = self.total_le.text()
-        self.amount_recieved = amount_paid_now
-        self.due_amount = amount_due
-        self.prod_details =category_list
-        self.prod_size =frame_size_list
-        self.qty_list =qty_list
-        self.amount_list =amount_list
-
-
-        print('the category list is',category_list)
-        print('the frame size list is ',frame_size_list)
-        print('the rate list is ',rate_list)
-        print('the qty list is',qty_list )
-        print('the amount list is ',amount_list)
+            self.billno = billno
+            self.customer_name = customer_name
+            self.phone_number = phone_no
+            self.total_amount = self.total_le.text()
+            self.amount_recieved = amount_paid_now
+            self.due_amount = amount_due
+            self.prod_details =category_list
+            self.prod_size =frame_size_list
+            self.qty_list =qty_list
+            self.amount_list =amount_list
 
 
-        if int(amount_due) == 0 and int(amount_paid_now) != 0:
-            QMessageBox.information(self,'Message','Bill is successfully closed')
+            print('the category list is',category_list)
+            print('the frame size list is ',frame_size_list)
+            print('the rate list is ',rate_list)
+            print('the qty list is',qty_list )
+            print('the amount list is ',amount_list)
+
+
+            if int(amount_due) == 0 and int(amount_paid_now) != 0:
+                QMessageBox.information(self,'Message','Bill is successfully closed')
+            else:
+                QMessageBox.information(self,'Message','Bill is updated Successfully')
+
+            self.save_btn.setEnabled(False)
         else:
-            QMessageBox.information(self,'Message','Bill is updated Successfully')
-
-        self.save_btn.setEnabled(False)
+            QMessageBox.warning(self,"Warning","Please enter a bill no")
 
 
 

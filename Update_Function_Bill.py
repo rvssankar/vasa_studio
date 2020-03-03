@@ -223,43 +223,47 @@ class Ui_new_function(object):
         self.package_label.setObjectName("package_label")
         self.close_btn = QtWidgets.QPushButton(self.table_frame)
         self.close_btn.setGeometry(QtCore.QRect(520, 600, 131, 71))
-        self.close_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.close_btn.setStyleSheet("#close_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 173, 84, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#close_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.close_btn.setObjectName("close_btn")
         self.clear_btn = QtWidgets.QPushButton(self.table_frame)
         self.clear_btn.setGeometry(QtCore.QRect(360, 600, 121, 71))
-        self.clear_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.clear_btn.setStyleSheet("#clear_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(240, 238, 74, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#clear_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.clear_btn.setObjectName("clear_btn")
         self.print_btn = QtWidgets.QPushButton(self.table_frame)
         self.print_btn.setGeometry(QtCore.QRect(198, 600, 131, 71))
-        self.print_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(153, 228, 156, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.print_btn.setStyleSheet("#print_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(153, 228, 156, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#print_btn:pressed{border-style:solid;border-width:6px}"                                     )
         self.print_btn.setObjectName("print_btn")
         self.save_btn = QtWidgets.QPushButton(self.table_frame)
         self.save_btn.setGeometry(QtCore.QRect(40, 600, 121, 71))
-        self.save_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.save_btn.setStyleSheet("#save_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#save_btn:pressed{border-style:solid;border-width:6px}"                                    )
         self.save_btn.setObjectName("save_btn")
         self.cal_tool_btn = QtWidgets.QToolButton(self.table_frame)
         self.cal_tool_btn.setGeometry(QtCore.QRect(578, 318, 31, 31))
@@ -558,59 +562,62 @@ class Update_Function_Bill(QDialog,Ui_new_function):
         self.due_le.setText(str(balance))
 
     def savebtn(self):
-        billno = int(self.bill_le.text())
-        customer_name = self.customer_le.text()
-        phone_no = self.phone_le.text()
-        booking_date =self.booking_le.text()
-        amount_paid_now = self.recieved_le.text()
-        amount_recieved_prev = int(float(self.paid_le.text()))
-        function_name =self.function_le.text()
-        package_name =self.package_le.text()
+        if self.bill_le.text() != "":
+            billno = int(self.bill_le.text())
+            customer_name = self.customer_le.text()
+            phone_no = self.phone_le.text()
+            booking_date =self.booking_le.text()
+            amount_paid_now = self.recieved_le.text()
+            amount_recieved_prev = int(float(self.paid_le.text()))
+            function_name =self.function_le.text()
+            package_name =self.package_le.text()
 
-        if amount_paid_now =='':
-            amount_paid_now = '0'
+            if amount_paid_now =='':
+                amount_paid_now = '0'
 
-        print ('amount paid now is ',amount_paid_now)
-        print('amount paid previous is ', amount_recieved_prev)
+            print ('amount paid now is ',amount_paid_now)
+            print('amount paid previous is ', amount_recieved_prev)
 
-        amount_recieved = int(amount_recieved_prev + int(amount_paid_now))
+            amount_recieved = int(amount_recieved_prev + int(amount_paid_now))
 
-        print('amount received sum is',amount_recieved)
+            print('amount received sum is',amount_recieved)
 
-        if self.due_le.text()=='':
-            self.due_le.setText('0')
-        amount_due = float(self.due_le.text())
-        int_phone_no = int(phone_no)
+            if self.due_le.text()=='':
+                self.due_le.setText('0')
+            amount_due = float(self.due_le.text())
+            int_phone_no = int(phone_no)
 
-        booking_date = datetime.datetime.strptime(booking_date,'%d/%m/%Y').date()
-        int_amount_due = int(amount_due)
+            booking_date = datetime.datetime.strptime(booking_date,'%d/%m/%Y').date()
+            int_amount_due = int(amount_due)
 
-        update_query ="UPDATE dbo.BILLING_TABLE SET CUSTOMER_NAME =?,PHONE_NO =?,FUNCTION_BOOKING_DATE=?,\
-                        AMOUNT_RECIEVED=?,AMOUNT_DUE=? WHERE BILL_NO =? AND BILL_TYPE='FUNCTION'"
-        update_data = [customer_name,int_phone_no,booking_date,amount_recieved,int_amount_due,billno]
-        print("the update data is ",update_data)
+            update_query ="UPDATE dbo.BILLING_TABLE SET CUSTOMER_NAME =?,PHONE_NO =?,FUNCTION_BOOKING_DATE=?,\
+                            AMOUNT_RECIEVED=?,AMOUNT_DUE=? WHERE BILL_NO =? AND BILL_TYPE='FUNCTION'"
+            update_data = [customer_name,int_phone_no,booking_date,amount_recieved,int_amount_due,billno]
+            print("the update data is ",update_data)
 
-        cur.execute(update_query,update_data)
-        connect.commit()
+            cur.execute(update_query,update_data)
+            connect.commit()
 
-        self.billno = billno
-        self.customer_name = customer_name
-        self.phone_number = phone_no
-        self.total_amount = self.total_le.text()
-        self.amount_recieved = amount_paid_now
-        self.due_amount = amount_due
-        self.function_name = function_name
-        self.package_name = package_name
-        self.booking_date =booking_date
+            self.billno = billno
+            self.customer_name = customer_name
+            self.phone_number = phone_no
+            self.total_amount = self.total_le.text()
+            self.amount_recieved = amount_paid_now
+            self.due_amount = amount_due
+            self.function_name = function_name
+            self.package_name = package_name
+            self.booking_date =booking_date
 
 
 
-        if int(amount_due) == 0 and int(amount_paid_now) != 0:
-            QMessageBox.information(self,'Message','Bill is successfully closed')
+            if int(amount_due) == 0 and int(amount_paid_now) != 0:
+                QMessageBox.information(self,'Message','Bill is successfully closed')
+            else:
+                QMessageBox.information(self,'Message','Bill is updated Successfully')
+
+            self.save_btn.setEnabled(False)
         else:
-            QMessageBox.information(self,'Message','Bill is updated Successfully')
-
-        self.save_btn.setEnabled(False)
+            QMessageBox.warning(self,"Warning","Please enter the Bill No")
 
     def clearbtn(self):
         columns_list =[self.bill_le,self.customer_le,self.phone_le,self.booking_le,self.total_le,self.recieved_le,self.due_le,self.function_le,self.package_le,self.paid_le]

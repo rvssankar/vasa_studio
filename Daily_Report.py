@@ -360,33 +360,37 @@ class Ui_daily_report(object):
         self.total_due_label_value.setObjectName("total_due_label_value")
         self.show_btn = QtWidgets.QPushButton(daily_report)
         self.show_btn.setGeometry(QtCore.QRect(630, 844, 191, 71))
-        self.show_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.show_btn.setStyleSheet("#show_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:25px;\n"
 "border-style:outset;\n"
 "border-width:5px;\n"
 "border-color:green;\n"
-"font:bold;")
+"font:bold;} \n"
+"#show_btn:pressed{border-style:solid; border-width :7px}"                                    )
+
         self.show_btn.setObjectName("show_btn")
         self.export_btn = QtWidgets.QPushButton(daily_report)
         self.export_btn.setGeometry(QtCore.QRect(850, 844, 191, 71))
-        self.export_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0.0348259, y1:0.085, x2:1, y2:1, stop:0 rgba(235, 107, 21, 249), stop:0.81592 rgba(255, 255, 255, 255));\n"
+        self.export_btn.setStyleSheet("#export_btn{background-color: qlineargradient(spread:pad, x1:0.0348259, y1:0.085, x2:1, y2:1, stop:0 rgba(235, 107, 21, 249), stop:0.81592 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:25px;\n"
 "border-style:outset;\n"
 "border-width:5px;\n"
 "border-color:brown;\n"
-"font:bold;")
+"font:bold;} \n"
+"#export_btn:pressed{border-style:solid; border-width:7px}"                                      )
         self.export_btn.setObjectName("export_btn")
         self.close_btn = QtWidgets.QPushButton(daily_report)
         self.close_btn.setGeometry(QtCore.QRect(1070, 844, 191, 71))
-        self.close_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(235, 28, 21, 249), stop:0.81592 rgba(255, 255, 255, 255));\n"
+        self.close_btn.setStyleSheet("#close_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(235, 28, 21, 249), stop:0.81592 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:25px;\n"
 "border-style:outset;\n"
 "border-width:5px;\n"
 "border-color:red;\n"
-"font:bold;")
+"font:bold;} \n"
+"#close_btn:pressed{border-style:solid;border-width:7px}"                                     )
         self.close_btn.setObjectName("close_btn")
 
         self.retranslateUi(daily_report)

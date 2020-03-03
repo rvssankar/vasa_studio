@@ -1,6 +1,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QDialog,QCalendarWidget,QTableWidgetItem
+from PyQt5.QtWidgets import QDialog,QCalendarWidget,QTableWidgetItem,QMessageBox
 from PyQt5.QtCore import QDate,Qt
 import datetime
 import pyodbc
@@ -85,13 +85,14 @@ class Ui_work_complete(object):
         self.to_label.setObjectName("to_label")
         self.finish_btn = QtWidgets.QPushButton(work_complete)
         self.finish_btn.setGeometry(QtCore.QRect(100, 150, 291, 61))
-        self.finish_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.finish_btn.setStyleSheet("#finish_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "font: 75 14pt \"Calibri\";\n"
 "border-radius:25px;\n"
 "border-style:outset;\n"
 "border-width:5px;\n"
 "border-color:green;\n"
-"font:bold;")
+"font:bold;} \n "
+"#finish_btn:pressed{border-style:solid;border-width:9px}"                                      )
         self.finish_btn.setObjectName("finish_btn")
         self.finish_frame = QtWidgets.QFrame(work_complete)
         self.finish_frame.setGeometry(QtCore.QRect(20, 240, 1221, 541))
@@ -388,6 +389,9 @@ class Work_Complete_Page(QDialog,Ui_work_complete):
 
                                 self.finish_table.setItem(row, column, self.table_item(value,
                                                                                        Qt.ItemIsSelectable | Qt.ItemIsEnabled))
+
+
+
 
 
     def table_item(self, text, flag):
