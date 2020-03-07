@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>expense_report</class>
+ <widget class="QDialog" name="expense_report">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1127</width>
+    <height>855</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#expense_report{
+	
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(169, 98, 130, 249), stop:0.81592 rgba(255, 255, 255, 255));}</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1351</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(58, 117, 0);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="title_label">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>20</y>
+      <width>601</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Cambria</family>
+      <pointsize>22</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 22pt &quot;Cambria&quot;;
+font:bold;
+color: white;
+</string>
+    </property>
+    <property name="text">
+     <string>Expense Reports</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>691</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGroupBox {
+  
+    border: 3px solid brown;
+    border-radius: 15px;
+    margin-top: 6px;
+	color:black;
+	font: 75 13pt &quot;Calibri&quot;;
+ 	font: bold;
+	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(137, 104, 235, 249), stop:0.81592 rgba(255, 255, 255, 255));
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position :top center;
+    padding: 0px 0px 0px 0px;
+}
+</string>
+   </property>
+   <property name="title">
+    <string>Search By Date</string>
+   </property>
+   <widget class="QToolButton" name="from_cal_tool_btn">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>50</y>
+      <width>30</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/calendar-512.png</normaloff>images/calendar-512.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="to_cal_tool_btn">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>50</y>
+      <width>30</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/calendar-512.png</normaloff>images/calendar-512.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="from_label">
+   <property name="geometry">
+    <rect>
+     <x>19</x>
+     <y>160</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 12pt &quot;Cambria&quot;;
+font:bold;
+color: rgb(170, 0, 0);
+</string>
+   </property>
+   <property name="text">
+    <string>From :</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="to_date">
+   <property name="geometry">
+    <rect>
+     <x>461</x>
+     <y>161</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="from_date">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>161</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLabel" name="to_label">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>160</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 12pt &quot;Cambria&quot;;
+font:bold;
+color: rgb(170, 0, 0);
+</string>
+   </property>
+   <property name="text">
+    <string>To  :</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="expense_frame">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>1101</width>
+     <height>491</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#expense_frame{border-width:1.5px;
+border-style:outset;
+border-color:black;
+border-width:4px;}
+</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QTableWidget" name="expense_table">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>1061</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#finish_table{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 255, 255, 255));}</string>
+    </property>
+    <column>
+     <property name="text">
+      <string>Sl No</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Expense Details</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Amount</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Description</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Date</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="total_le">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>329</x>
+     <y>750</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:red;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="total_label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>750</y>
+     <width>291</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 12pt &quot;Cambria&quot;;
+font:bold;
+color: rgb(55, 55, 166);
+</string>
+   </property>
+   <property name="text">
+    <string>Total Expense Amount (Rs.)       :</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="show_btn">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>130</y>
+     <width>191</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#show_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(37, 125, 40, 255), stop:1 rgba(255, 255, 255, 255));
+font: 75 14pt &quot;Calibri&quot;;
+border-radius:25px;
+border-style:outset;
+border-width:5px;
+border-color:green;
+font:bold;}
+#show_btn:pressed{border-style:solid;
+border-width:9px}</string>
+   </property>
+   <property name="text">
+    <string>Show Report</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="export_btn">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>750</y>
+     <width>191</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#export_btn{background-color: qlineargradient(spread:pad, x1:0.0348259, y1:0.085, x2:1, y2:1, stop:0 rgba(235, 107, 21, 249), stop:0.81592 rgba(255, 255, 255, 255));
+font: 75 14pt &quot;Calibri&quot;;
+border-radius:25px;
+border-style:outset;
+border-width:5px;
+border-color:brown;
+font:bold;}
+#export_btn:pressed{border-style:solid;
+border-width:9px}</string>
+   </property>
+   <property name="text">
+    <string>Export Report</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="close_btn">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>750</y>
+     <width>191</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#close_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(235, 28, 21, 249), stop:0.81592 rgba(255, 255, 255, 255));
+font: 75 14pt &quot;Calibri&quot;;
+border-radius:25px;
+border-style:outset;
+border-width:5px;
+border-color:red;
+font:bold;}
+#close_btn:pressed{border-style:solid;
+border-width:9px}</string>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,33 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/50-Beautiful.jpg</file>
+    <file>images/46971629.jpg</file>
+    <file>images/36565647561_d380a3d691_b.jpg</file>
+    <file>images/adminpasswordchange.png</file>
+    <file>images/Background_admin_change_password.jpeg</file>
+    <file>images/background-1462755_1280.jpg</file>
+    <file>images/calendar-512.png</file>
+    <file>images/employee-icon_246750.png</file>
+    <file>images/glitter-vintage.jpg</file>
+    <file>images/images.jpg</file>
+    <file>images/istockphoto-534129810-612x612.jpg</file>
+    <file>images/Lights.jpg</file>
+    <file>images/Login_admin.png</file>
+    <file>images/man.ico</file>
+    <file>images/maxresdefault.jpg</file>
+    <file>images/new.jpg</file>
+    <file>images/New-Blue-Background-Main-2.jpg</file>
+    <file>images/newprod.png</file>
+    <file>images/New-Product.png</file>
+    <file>images/new-product-22853660.jpg</file>
+    <file>images/pexels-photo-949587.jpeg</file>
+    <file>images/photo_backgrounds_textures_app05.jpg</file>
+    <file>images/pyrcc5.exe</file>
+    <file>images/Staff_admin.png</file>
+    <file>images/Staff_Login.png</file>
+    <file>images/studio.jpg</file>
+    <file>images/Vasa.qrc</file>
+    <file>images/VASA_ICON.png</file>
+    <file>images/VASA_MAIN.jpg</file>
+  </qresource>
+</RCC>
