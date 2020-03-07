@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QDialog,QTableWidget,QTableWidgetItem
 from PyQt5.QtCore import Qt
 import datetime
 import pyodbc
+import os
+import sys
 
 class Ui_reminder_page(object):
     def setupUi(self, reminder_page):
@@ -172,6 +174,20 @@ class Reminder_Page(QDialog,Ui_reminder_page):
         self.table_population()
 
         self.close_btn.clicked.connect(self.closebtn)
+
+        config_name = 'reminders.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
     def connectdb(self):
         global cur

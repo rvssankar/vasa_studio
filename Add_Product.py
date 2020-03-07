@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QDialog,QInputDialog,QLineEdit,QMessageBox
 import pyodbc
 from decimal import Decimal
 import Vasa
+import os
+import sys
 
 
 class Ui_New_product_dialog(object):
@@ -200,16 +202,25 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
 
         self.combo_box.currentIndexChanged['QString'].connect(self.comboindexchanged)
 
-
-
         self.combovalue()
-
-
-
 
         self.add_btn.clicked.connect(self.newprod)
         self.save_btn.clicked.connect(self.savebtn)
         self.clear_btn.clicked.connect(self.clearbtn)
+
+        config_name = 'daily_product.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
     def comboindexchanged(self):
         current_value =self.combo_box.currentText()

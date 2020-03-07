@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QDialog,QMessageBox,QTableWidgetItem
 from PyQt5.QtCore import Qt
 import pyodbc
 import datetime
+import os
+import sys
 
 
 class Ui_allocate_window(object):
@@ -211,6 +213,20 @@ class Work_Allocate_Page (QDialog,Ui_allocate_window):
         self.table_population()
         self.allocate_table.cellClicked.connect(self.cellvalue)
         self.allocate_btn.clicked.connect(self.allocatebtn)
+
+        config_name = 'work_allocate.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
 
     def connectdb(self):

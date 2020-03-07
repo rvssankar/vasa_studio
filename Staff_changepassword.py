@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QDialog,QMessageBox
 from PyQt5.QtCore import pyqtSlot
 import pyodbc
 import Vasa
+import os
+import sys
 
 
 class Ui_Change_Admin_Password(object):
@@ -202,10 +204,25 @@ class Staff_Password_Change(QDialog,Ui_Change_Admin_Password):
     def __init__(self,parent=None):
         super(Staff_Password_Change,self).__init__(parent)
         self.setupUi(self)
+        self.setWindowTitle("Change Staff Password")
 
         self.change_btn.clicked.connect(self.changebtn)
         self.clr_btn.clicked.connect(self.clear_btn)
         self.cncl_btn.clicked.connect(self.cancelbtn)
+
+        config_name = 'staff_password.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
 
         self.show()

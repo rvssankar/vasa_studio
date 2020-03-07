@@ -5,6 +5,8 @@ from PyQt5.QtCore import QDate,Qt
 import pyodbc
 import datetime
 import xlsxwriter
+import os
+import sys
 
 class Ui_daily_report(object):
     def setupUi(self, daily_report):
@@ -460,6 +462,20 @@ class Daily_Report_Page(QDialog,Ui_daily_report):
         self.export_btn.clicked.connect(self.exportbtn)
         self.close_btn.clicked.connect(self.closebtn)
 
+        config_name = 'daily_report.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
+
 
     def connectdb(self):
         global cur
@@ -659,114 +675,116 @@ class Daily_Report_Page(QDialog,Ui_daily_report):
         if self.daily_table.rowCount() >=1:
                 file_path =QFileDialog.getSaveFileName(self, 'Export to Excel', "Daily_Bill_Report_"+self.table_from_date.strftime("%d_%b_%Y")+ "_to_"+self.table_to_date.strftime("%d_%b_%Y")+".xlsx", 'Excel files (.xlsx) ;; All Files ()')
 
-                print("File path is",file_path)
+                if file_path != ('', ''):
 
-                excel_book_name  = file_path[0]
+                    print("File path is",file_path)
 
-                workbook = xlsxwriter.Workbook(excel_book_name)
-                worksheet = workbook.add_worksheet("Today Report")
+                    excel_book_name  = file_path[0]
 
-                title_format = workbook.add_format({'bold' : True})
-                title_format.set_bg_color('yellow')
-                title_format.set_font_color('brown')
-                title_format.set_border()
-                data = self.data_result
+                    workbook = xlsxwriter.Workbook(excel_book_name)
+                    worksheet = workbook.add_worksheet("Today Report")
 
-
-                cell_format = workbook.add_format()
-                cell_format.set_border()
-
-                money_format = workbook.add_format()
-                money_format.set_border()
-                money_format.set_num_format('#,##0.00')
+                    title_format = workbook.add_format({'bold' : True})
+                    title_format.set_bg_color('yellow')
+                    title_format.set_font_color('brown')
+                    title_format.set_border()
+                    data = self.data_result
 
 
-                print("The first data is ",data)
-                print("check value",data[0][0])
-                data_modified =[]
-                list_value = []
+                    cell_format = workbook.add_format()
+                    cell_format.set_border()
 
-                data_modified = [tuple(str(item) for item in i) for i in data]
-
-
-
-                print ( "The workbook Name is ",excel_book_name)
+                    money_format = workbook.add_format()
+                    money_format.set_border()
+                    money_format.set_num_format('#,##0.00')
 
 
-                title =["BILL_NO","SL_NO","DATE","CATEGORY","FRAME_SIZE","RATE","QTY","AMOUNT","TOTAL_AMOUNT","AMOUNT_RECIEVED",
-                        "AMOUNT_DUE","CUSTOMER_NAME","PHONE_NO"]
-                title_size =[len(i) for i in title]
-                print('the  title size is',title_size)
+                    print("The first data is ",data)
+                    print("check value",data[0][0])
+                    data_modified =[]
+                    list_value = []
 
-                for col in range(0,len(title)):
+                    data_modified = [tuple(str(item) for item in i) for i in data]
 
-                    worksheet.write(0,col,title[col],title_format)
 
-                for row_level in range(len(data_modified)):
-                    for col_level in range(len(data_modified[0])):
-                        col_list =[5,7,7,9,10]
 
-                        if col_level in col_list:
-                            value = int(float(data_modified[row_level][col_level]))
-                            worksheet.write(row_level + 1, col_level, value, money_format)
+                    print ( "The workbook Name is ",excel_book_name)
+
+
+                    title =["BILL_NO","SL_NO","DATE","CATEGORY","FRAME_SIZE","RATE","QTY","AMOUNT","TOTAL_AMOUNT","AMOUNT_RECIEVED",
+                            "AMOUNT_DUE","CUSTOMER_NAME","PHONE_NO"]
+                    title_size =[len(i) for i in title]
+                    print('the  title size is',title_size)
+
+                    for col in range(0,len(title)):
+
+                        worksheet.write(0,col,title[col],title_format)
+
+                    for row_level in range(len(data_modified)):
+                        for col_level in range(len(data_modified[0])):
+                            col_list =[5,7,7,9,10]
+
+                            if col_level in col_list:
+                                value = int(float(data_modified[row_level][col_level]))
+                                worksheet.write(row_level + 1, col_level, value, money_format)
+                            else:
+                                value = data_modified[row_level][col_level]
+                                worksheet.write(row_level+1,col_level,value,cell_format)
+
+                    print ( " the row number value is",row_level)
+
+
+
+                    footer_list =["Total Order Amount :","Total Recieved :","Due Amount :"]
+
+                    total = int(float(self.total_amount))
+                    recieved = int(float(self.amount_recieved))
+                    due =int(float(self.due_amount))
+
+                    footer_amt_list =[total,recieved,due]
+
+                    footer_format = workbook.add_format()
+                    footer_format.set_border()
+                    footer_format.set_bold(True)
+                    footer_format.set_font_size(14)
+
+                    footer_money_format = workbook.add_format()
+                    footer_money_format.set_border()
+                    footer_money_format.set_bold(True)
+                    footer_money_format.set_num_format('#,##0.00')
+                    footer_money_format.set_font_color('green')
+                    footer_money_format.set_font_size(14)
+
+
+                    footer_money_format_due = workbook.add_format()
+                    footer_money_format_due.set_border()
+                    footer_money_format_due.set_bold(True)
+                    footer_money_format_due.set_num_format('#,##0.00')
+                    footer_money_format_due.set_font_color('red')
+                    footer_money_format_due.set_font_size(14)
+
+
+
+
+                    row_num =row_level +6
+                    for i in range(3):
+                        footer_format.set_font_color('black')
+                        worksheet.merge_range(row_num,0,row_num,2,footer_list[i],footer_format)
+                        if i==2:
+                            worksheet.set_column(row_num,3,12)
+                            worksheet.write(row_num, 3, footer_amt_list[i], footer_money_format_due)
+
                         else:
-                            value = data_modified[row_level][col_level]
-                            worksheet.write(row_level+1,col_level,value,cell_format)
+                            worksheet.set_column(row_num, 3, 12)
+                            worksheet.write(row_num, 3, footer_amt_list[i], footer_money_format)
 
-                print ( " the row number value is",row_level)
-
-
-
-                footer_list =["Total Order Amount :","Total Recieved :","Due Amount :"]
-
-                total = int(float(self.total_amount))
-                recieved = int(float(self.amount_recieved))
-                due =int(float(self.due_amount))
-
-                footer_amt_list =[total,recieved,due]
-
-                footer_format = workbook.add_format()
-                footer_format.set_border()
-                footer_format.set_bold(True)
-                footer_format.set_font_size(14)
-
-                footer_money_format = workbook.add_format()
-                footer_money_format.set_border()
-                footer_money_format.set_bold(True)
-                footer_money_format.set_num_format('#,##0.00')
-                footer_money_format.set_font_color('green')
-                footer_money_format.set_font_size(14)
+                        row_num+=1
+                    worksheet.set_column(0,2,10)
 
 
-                footer_money_format_due = workbook.add_format()
-                footer_money_format_due.set_border()
-                footer_money_format_due.set_bold(True)
-                footer_money_format_due.set_num_format('#,##0.00')
-                footer_money_format_due.set_font_color('red')
-                footer_money_format_due.set_font_size(14)
+                    workbook.close()
 
-
-
-
-                row_num =row_level +6
-                for i in range(3):
-                    footer_format.set_font_color('black')
-                    worksheet.merge_range(row_num,0,row_num,2,footer_list[i],footer_format)
-                    if i==2:
-                        worksheet.set_column(row_num,3,12)
-                        worksheet.write(row_num, 3, footer_amt_list[i], footer_money_format_due)
-
-                    else:
-                        worksheet.set_column(row_num, 3, 12)
-                        worksheet.write(row_num, 3, footer_amt_list[i], footer_money_format)
-
-                    row_num+=1
-                worksheet.set_column(0,2,10)
-
-
-                workbook.close()
-
-                QMessageBox.information(self,"File Export","Daily Report Exported Successfully...")
+                    QMessageBox.information(self,"File Export","Daily Report Exported Successfully...")
         else:
                 QMessageBox.warning(self,"Warning", "Please click show button to get data and then select Export")
 

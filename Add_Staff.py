@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QDialog,QMessageBox
 import pyodbc
 from Staff_Table import Add_Staff_Details
 import Vasa
+import os
+import sys
 
 class Ui_New_staff(object):
     def setupUi(self, New_staff):
@@ -237,6 +239,8 @@ class Add_Staff_Window(QDialog,Ui_New_staff):
     def __init__(self,parent=None):
         super(Add_Staff_Window,self).__init__(parent)
         self.setupUi(self)
+        self.setWindowTitle('Add Staffs')
+
         self.onlyint = QtGui.QIntValidator()
         self.contact_le.setValidator(self.onlyint)
         self.password_le.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -246,6 +250,20 @@ class Add_Staff_Window(QDialog,Ui_New_staff):
         self.change_btn.clicked.connect(self.addbtn)
         self.clr_btn.clicked.connect(self.clearbtn)
         self.change_btn_2.clicked.connect(self.viewstaff)
+
+        config_name = 'add_staff.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
     def addbtn(self):
 

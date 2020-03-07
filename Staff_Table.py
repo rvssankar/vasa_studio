@@ -1,8 +1,9 @@
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog,QTableWidgetItem,QMessageBox,QTableWidget
 import pyodbc
+import os
+import sys
 
 
 class Ui_Table_dialog(object):
@@ -105,15 +106,26 @@ class Add_Staff_Details(QDialog,Ui_Table_dialog):
     def __init__(self,parent=None):
         super(Add_Staff_Details,self).__init__(parent)
         self.setupUi(self)
+
+        self.setWindowTitle("Staff Details")
+
         self.display_records()
         self.close_btn.clicked.connect(self.closebtn)
         self.delete_btn.clicked.connect(self.deletebtn)
 
-        #index = self.staff_table.selectionModel().currentIndex()
-        #value = index.sibling(index.row(), index.column()).data()
-        #print(index)
-        #index = self.staff_table.selectedIndexes()
-        #print(index)
+        config_name = 'staff_table.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
 
     def display_records(self):

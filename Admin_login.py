@@ -1,10 +1,11 @@
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox,QDialog
 import Vasa
 #from Mainwindow import Mainwindow
 import pyodbc
+import os
+import sys
 
 
 class Ui_Admin_Login(object):
@@ -144,8 +145,25 @@ class Admin_Login_User(QDialog,Ui_Admin_Login):
         super(Admin_Login_User,self).__init__(parent)
         self.setupUi(self)
 
+        self.setWindowTitle("Admin Login")
+
         self.login_btn.clicked.connect(self.loginbtn)
         self.cancel_btn.clicked.connect(self.cancelbtn)
+
+        config_name = 'admin_login.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
+
         self.show()
 
     def connectdb(self):

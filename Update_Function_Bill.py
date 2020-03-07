@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QDate,Qt
 from PyQt5.QtWidgets import QDialog,QCalendarWidget,QMessageBox
 import os
+import sys
 import pyodbc
 import datetime
 
@@ -405,6 +406,20 @@ class Update_Function_Bill(QDialog,Ui_new_function):
         self.print_btn.clicked.connect(self.printbill)
 
         self.connectdb()
+
+        config_name = 'update_function_bill.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
         shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(QtCore.Qt.Key_Tab),self.bill_le, context=QtCore.Qt.WidgetWithChildrenShortcut, activated =self.bill_value_fetch)
 

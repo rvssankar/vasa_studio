@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QDialog,QCalendarWidget,QMessageBox,QTableWidgetItem
 from PyQt5.QtCore import QDate,Qt
 import pyodbc
 import datetime
+import os
+import sys
 
 
 class Ui_expense_dialog(object):
@@ -323,6 +325,20 @@ class Add_Expenses(QDialog,Ui_expense_dialog):
         self.table_records()
         self.serial_generator()
         self.current_date()
+
+        config_name = 'expenses.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
     def connectdb(self):
         global cur

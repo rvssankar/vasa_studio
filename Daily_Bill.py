@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog,QCalendarWidget,QComboBox,QTableWidgetItem,QMessageBox,QDateEdit
 from PyQt5.QtCore import QDate,Qt
 import os
+import sys
 import pyodbc
 import datetime
 from PyQt5.QtPrintSupport import QPrinter,QPrintDialog,QPrintPreviewDialog
@@ -394,6 +395,20 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
         self.table_records()
         #self.connectdb()
         #self.totalamount()
+
+        config_name = 'daily_bill.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
 
     def connectdb(self):

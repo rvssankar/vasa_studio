@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import QDialog,QCalendarWidget,QTableWidgetItem,QMessageBox
 from PyQt5.QtCore import QDate,Qt
 import datetime
 import pyodbc
-
+import os
+import sys
 
 class Ui_work_complete(object):
     def setupUi(self, work_complete):
@@ -267,6 +268,20 @@ class Work_Complete_Page(QDialog,Ui_work_complete):
         self.current_date()
         self.table_population()
         self.finish_btn.clicked.connect(self.table_population)
+
+        config_name = 'work_complete.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
 
     def connectdb(self):

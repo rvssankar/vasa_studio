@@ -3,6 +3,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog,QMessageBox
 import pyodbc
 import Vasa
+import os
+import sys
 
 class Ui_Staff_Login(object):
     def setupUi(self, Staff_Login):
@@ -138,12 +140,32 @@ class Staff_Login_User(QDialog,Ui_Staff_Login):
         super(Staff_Login_User,self).__init__(parent)
         self.setupUi(self)
 
+        self.setWindowTitle("Staff Login")
+
         self.login_btn.clicked.connect(self.loginbtn)
         self.cancel_btn.clicked.connect(self.cancelbtn)
 
+        config_name = 'staff_login.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
+
+        self.show()
+
     def connectdb(self):
         global cur
-        connect = pyodbc.connect('Driver={SQL SERVER};'
+        global connect
+
+        connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
@@ -184,7 +206,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Staff_Login = QtWidgets.QDialog()
-    ui = Ui_Staff_Login()
-    ui.setupUi(Staff_Login)
-    Staff_Login.show()
+    ui = Staff_Login_User()
+    #ui.setupUi(Staff_Login)
+    ui.show()
     sys.exit(app.exec_())

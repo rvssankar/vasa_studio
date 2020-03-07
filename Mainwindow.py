@@ -23,6 +23,7 @@ from Expense_Report import Expense_Report_Page
 from Reminder import Reminder_Page
 import VASA_IMAGE
 import sys
+import os
 
 
 
@@ -36,12 +37,11 @@ class Mainwindow(QMainWindow):
         self.width = 400
         self.height = 300
 
-        icon_image = 'images\VASA_ICON.png'
-        self.main_image = 'images\VASA_MAIN.jpg'
+
 
         self.setWindowTitle(self.title)
         self.windowpage()
-        self.setWindowIcon(QtGui.QIcon(icon_image))
+
 
 
         self.centralWidget()
@@ -49,6 +49,22 @@ class Mainwindow(QMainWindow):
 
 
     def windowpage(self):
+
+        config_name = 'myapp.cfg'
+
+        # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            application_path = os.path.dirname(sys.executable)
+        elif __file__:
+            application_path = os.path.dirname(__file__)
+
+        config_path = os.path.join(application_path, config_name)
+
+        icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
+        self.main_image = os.path.join(application_path, 'images', 'VASA_MAIN.jpg')
+
+
+        self.setWindowIcon(QtGui.QIcon(icon_image))
 
         menubar = self.menuBar()
         menubar.setStyleSheet(('font: 10 14pt "Calibri" bold'))
