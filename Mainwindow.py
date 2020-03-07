@@ -17,6 +17,11 @@ from Work_Allocate import  Work_Allocate_Page
 from Work_Finish import  Work_Finish_Window
 from Work_complete import Work_Complete_Page
 from Today_Report import Today_Report_Page
+from Daily_Report import Daily_Report_Page
+from Function_Report import Function_Report_Page
+from Expense_Report import Expense_Report_Page
+from Reminder import Reminder_Page
+import VASA_IMAGE
 import sys
 
 
@@ -81,6 +86,7 @@ class Mainwindow(QMainWindow):
         daily_bill_report = QAction("Daily Bill Report",self)
         function_bill_report = QAction('Function Bill Report',self)
         expense_report =QAction('Expense Report',self)
+        reminders = QAction("Reminders",self)
 
 
 
@@ -107,6 +113,8 @@ class Mainwindow(QMainWindow):
         reportsmenu.addAction(function_bill_report)
         reportsmenu.addAction(expense_report)
 
+        remindermenu.addAction(reminders)
+
         exitmenu.addAction(exit)
         logoutmenu.addAction(logout)
         prodcostmenu.addAction(Add_daily_product)
@@ -128,6 +136,10 @@ class Mainwindow(QMainWindow):
         work_pending.triggered.connect(self.work_pending)
         work_complete.triggered.connect(self.work_complete)
         today_report.triggered.connect(self.today_report)
+        daily_bill_report.triggered.connect(self.daily_report)
+        function_bill_report.triggered.connect(self.function_report)
+        expense_report.triggered.connect(self.expense_report)
+        reminders.triggered.connect(self.reminders)
         exit.triggered.connect(self.close)
         logout.triggered.connect(self.logout)
 
@@ -150,6 +162,15 @@ class Mainwindow(QMainWindow):
 
         vbox.addWidget(self.label)
 
+        reminder = Reminder_Page()
+
+        self.result_count = reminder.result_count
+
+        print("the result count is", self.result_count)
+
+
+
+
     def adminpage(self):
         dialog = Admin_Login_User()
         dialog.exec_()
@@ -159,6 +180,11 @@ class Mainwindow(QMainWindow):
         self.loginmenu.setDisabled(True)
         for menu in self.menulist:
             menu.setDisabled(False)
+
+        if self.result_count >=1 :
+            Reminder_Page().exec_()
+
+
 
 
 
@@ -171,6 +197,9 @@ class Mainwindow(QMainWindow):
         self.loginmenu.setDisabled(True)
         for menu in self.staffmenu:
             menu.setDisabled(False)
+
+        if self.result_count >=1 :
+            Reminder_Page().exec_()
 
     def admin_change_password(self):
         dialog = Admin_Password_Change()
@@ -226,6 +255,22 @@ class Mainwindow(QMainWindow):
 
     def today_report(self):
         dialog = Today_Report_Page()
+        dialog.exec_()
+
+    def daily_report(self):
+        dialog =Daily_Report_Page()
+        dialog.exec_()
+
+    def function_report(self):
+        dialog = Function_Report_Page()
+        dialog.exec_()
+
+    def expense_report(self):
+        dialog = Expense_Report_Page()
+        dialog.exec_()
+
+    def reminders(self):
+        dialog = Reminder_Page()
         dialog.exec_()
 
 
