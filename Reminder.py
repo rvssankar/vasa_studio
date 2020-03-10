@@ -189,6 +189,11 @@ class Reminder_Page(QDialog,Ui_reminder_page):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        close_image = os.path.join(application_path, "images", "close.png")
+
+        self.close_btn.setIcon(QtGui.QIcon(close_image))
+        self.close_btn.setIconSize(QtCore.QSize(40, 40))
+
     def connectdb(self):
         global cur
         global connect

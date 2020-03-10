@@ -228,6 +228,11 @@ class Work_Allocate_Page (QDialog,Ui_allocate_window):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        assign_image = os.path.join(application_path, "images", "assign.png")
+
+        self.allocate_btn.setIcon(QtGui.QIcon(assign_image))
+        self.allocate_btn.setIconSize(QtCore.QSize(50, 50))
+
 
     def connectdb(self):
         global cur

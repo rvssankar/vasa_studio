@@ -335,6 +335,15 @@ class Today_Report_Page(QDialog,Ui_today_report_window):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        excel_image = os.path.join(application_path, "images", "excel.png")
+        close_image = os.path.join(application_path, "images", "close.png")
+
+        self.export_btn.setIcon(QtGui.QIcon(excel_image))
+        self.export_btn.setIconSize(QtCore.QSize(40, 40))
+
+        self.close_btn.setIcon(QtGui.QIcon(close_image))
+        self.close_btn.setIconSize(QtCore.QSize(40, 40))
+
 
 
 

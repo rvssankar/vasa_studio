@@ -28,6 +28,7 @@ import os
 
 
 
+
 class Mainwindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -62,6 +63,8 @@ class Mainwindow(QMainWindow):
 
         icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
         self.main_image = os.path.join(application_path, 'images', 'VASA_MAIN.jpg')
+
+        self.exit_image = os.path.join(application_path, "images", "exit.png")
 
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
@@ -296,7 +299,10 @@ class Mainwindow(QMainWindow):
 
 
     def closeEvent(self, event):
+
         close = QMessageBox.question(self,'Quit','Are you sure to exit the application',QMessageBox.Yes|QMessageBox.No)
+
+
         if close == QMessageBox.Yes:
             event.accept()
         else:
@@ -314,6 +320,8 @@ class Mainwindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+
+
     window = Mainwindow()
     window.showMaximized()
     sys.exit(app.exec_())

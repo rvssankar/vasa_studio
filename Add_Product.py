@@ -1,6 +1,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog,QInputDialog,QLineEdit,QMessageBox
+from PyQt5.QtGui import QFont
 import pyodbc
 from decimal import Decimal
 import Vasa
@@ -222,6 +223,20 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        add_image = os.path.join(application_path, "images", "add.png")
+
+        clear_image = os.path.join(application_path, "images", "clear.png")
+        save_image = os.path.join(application_path, "images", "save.png")
+
+        self.add_btn.setIcon(QtGui.QIcon(add_image))
+        self.add_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.clear_btn.setIcon(QtGui.QIcon(clear_image))
+        self.clear_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.save_btn.setIcon(QtGui.QIcon(save_image))
+        self.save_btn.setIconSize(QtCore.QSize(30, 30))
+
     def comboindexchanged(self):
         current_value =self.combo_box.currentText()
         print(current_value)
@@ -251,7 +266,8 @@ class Add_Product_window(QDialog,Ui_New_product_dialog):
         cur = connect.cursor()
         return cur
     def newprod(self):
-        text,okpressed = QInputDialog.getText(self,'Add Product','Product Name :',QLineEdit.Normal,"")
+
+        text,okpressed = QInputDialog.getText(self,'Add Product','<html style="font-size:12pt;font-weight:bold;">Product Name :</html>',QLineEdit.Normal,"")
         if okpressed and text!='':
                 value = str.upper(text)
                 self.connectdb()

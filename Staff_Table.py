@@ -62,12 +62,13 @@ class Ui_Table_dialog(object):
         font.setItalic(False)
         font.setWeight(75)
         self.delete_btn.setFont(font)
-        self.delete_btn.setStyleSheet("background-color: rgb(202, 66, 68);\n"
+        self.delete_btn.setStyleSheet("#delete_btn{background-color: rgb(202, 66, 68);\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:6px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#delete_btn:pressed{border-style:solid;border-width:10px}"                                      )
         self.delete_btn.setObjectName("delete_btn")
         self.close_btn = QtWidgets.QPushButton(Table_dialog)
         self.close_btn.setGeometry(QtCore.QRect(710, 590, 211, 71))
@@ -77,12 +78,13 @@ class Ui_Table_dialog(object):
         font.setItalic(False)
         font.setWeight(75)
         self.close_btn.setFont(font)
-        self.close_btn.setStyleSheet("background-color: rgb(139, 97, 186);\n"
+        self.close_btn.setStyleSheet("#close_btn{background-color: rgb(139, 97, 186);\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:6px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#close_btn:pressed{border-style:solid;border-width:10px}"                                     )
         self.close_btn.setObjectName("close_btn")
 
         self.retranslateUi(Table_dialog)
@@ -127,6 +129,15 @@ class Add_Staff_Details(QDialog,Ui_Table_dialog):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        delete_image = os.path.join(application_path, "images", "delete.png")
+        close_image = os.path.join(application_path, "images", "cancel.png")
+
+        self.delete_btn.setIcon(QtGui.QIcon(delete_image))
+        self.delete_btn.setIconSize(QtCore.QSize(45, 45))
+
+        self.close_btn.setIcon(QtGui.QIcon(close_image))
+        self.close_btn.setIconSize(QtCore.QSize(45, 45))
+
 
     def display_records(self):
         connect = pyodbc.connect('Driver={SQL SERVER};'
@@ -138,8 +149,8 @@ class Add_Staff_Details(QDialog,Ui_Table_dialog):
         result = cur.execute(sel_query)
         self.staff_table.setRowCount(0)
         header= self.staff_table.horizontalHeader()
-        header.setSectionResizeMode(0,QtWidgets.QHeaderView.Stretch)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(0,QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
         header.setStyleSheet("QHeaderView::section { border: 1px solid ;}");

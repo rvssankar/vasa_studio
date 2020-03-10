@@ -93,12 +93,13 @@ class Ui_Change_Admin_Password(object):
         font.setItalic(False)
         font.setWeight(75)
         self.change_btn.setFont(font)
-        self.change_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(143, 89, 162, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.change_btn.setStyleSheet("#change_btn{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(143, 89, 162, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#change_btn:pressed{border-style:solid;border-width:6px}"                                      )
         self.change_btn.setObjectName("change_btn")
         self.clr_btn = QtWidgets.QPushButton(Change_Admin_Password)
         self.clr_btn.setGeometry(QtCore.QRect(280, 508, 131, 61))
@@ -108,12 +109,13 @@ class Ui_Change_Admin_Password(object):
         font.setItalic(False)
         font.setWeight(75)
         self.clr_btn.setFont(font)
-        self.clr_btn.setStyleSheet("background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 144, 35, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.clr_btn.setStyleSheet("#clr_btn{background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 144, 35, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#clr_btn:pressed{border-style:solid;border-width:6px}"                                   )
         self.clr_btn.setObjectName("clr_btn")
         self.cncl_btn = QtWidgets.QPushButton(Change_Admin_Password)
         self.cncl_btn.setGeometry(QtCore.QRect(445, 508, 131, 61))
@@ -123,12 +125,13 @@ class Ui_Change_Admin_Password(object):
         font.setItalic(False)
         font.setWeight(75)
         self.cncl_btn.setFont(font)
-        self.cncl_btn.setStyleSheet("background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 53, 35, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.cncl_btn.setStyleSheet("#cncl_btn{background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 53, 35, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#cncl_btn:pressed{border-style:solid;border-width:6px}"                                    )
         self.cncl_btn.setObjectName("cncl_btn")
         self.page_frame = QtWidgets.QFrame(Change_Admin_Password)
         self.page_frame.setGeometry(QtCore.QRect(80, 140, 521, 481))
@@ -223,6 +226,19 @@ class Staff_Password_Change(QDialog,Ui_Change_Admin_Password):
         icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
+
+        change_image = os.path.join(application_path, "images", "change.png")
+        clear_image = os.path.join(application_path, "images", "clear.png")
+        close_image = os.path.join(application_path, "images", "cancel.png")
+
+        self.change_btn.setIcon(QtGui.QIcon(change_image))
+        self.change_btn.setIconSize(QtCore.QSize(40, 40))
+
+        self.clr_btn.setIcon(QtGui.QIcon(clear_image))
+        self.clr_btn.setIconSize(QtCore.QSize(40, 40))
+
+        self.cncl_btn.setIcon(QtGui.QIcon(close_image))
+        self.cncl_btn.setIconSize(QtCore.QSize(40, 40))
 
 
         self.show()

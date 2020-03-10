@@ -385,6 +385,24 @@ class Add_Function_Bill (QDialog,Ui_new_function):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        save_image = os.path.join(application_path, "images", "save.png")
+        print_image = os.path.join(application_path, "images", "print.png")
+        clear_image = os.path.join(application_path, "images", "clear.png")
+        close_image = os.path.join(application_path, "images", "close.png")
+        self.calender_image = os.path.join(application_path, "images", "calender.png")
+
+        self.save_btn.setIcon(QtGui.QIcon(save_image))
+        self.save_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.print_btn.setIcon(QtGui.QIcon(print_image))
+        self.print_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.clear_btn.setIcon(QtGui.QIcon(clear_image))
+        self.clear_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.close_btn.setIcon(QtGui.QIcon(close_image))
+        self.close_btn.setIconSize(QtCore.QSize(35, 35))
+
 
 
     def connectdb(self):
@@ -435,6 +453,8 @@ class Add_Function_Bill (QDialog,Ui_new_function):
         self.calender.clicked.connect(self.updatedate)
         self.calender.setWindowModality(Qt.ApplicationModal)
         self.calender.setWindowTitle("Booking Calender")
+
+        self.calender.setWindowIcon(QtGui.QIcon(self.calender_image))
 
         self.calender.show()
 

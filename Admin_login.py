@@ -65,11 +65,12 @@ class Ui_Admin_Login(object):
         font.setBold(True)
         font.setWeight(75)
         self.login_btn.setFont(font)
-        self.login_btn.setStyleSheet("background-color:rgb(126, 255, 126);\n"
+        self.login_btn.setStyleSheet("#login_btn{background-color:rgb(126, 255, 126);\n"
 "border-radius:25px;\n"
 "border-style:outset;\n"
 "border-width:5px;\n"
-"border-color:green;")
+"border-color:green;} \n"
+"#login_btn:pressed{border-style:solid;border-width:9px}"                                     )
         self.login_btn.setObjectName("login_btn")
         self.cancel_btn = QtWidgets.QPushButton(Admin_Login)
         self.cancel_btn.setGeometry(QtCore.QRect(327, 426, 151, 61))
@@ -78,11 +79,12 @@ class Ui_Admin_Login(object):
         font.setBold(True)
         font.setWeight(75)
         self.cancel_btn.setFont(font)
-        self.cancel_btn.setStyleSheet("background-color:rgb(255, 131, 150);\n"
+        self.cancel_btn.setStyleSheet("#cancel_btn{background-color:rgb(255, 131, 150);\n"
 "border-radius:25px;\n"
 "border-style:outset;\n"
 "border-width:5px;\n"
-"border-color:red;")
+"border-color:red;} \n"
+"#cancel_btn:pressed{border-style:solid;border-width:9px}"                                      )
         self.cancel_btn.setObjectName("cancel_btn")
         self.Login_frame = QtWidgets.QFrame(Admin_Login)
         self.Login_frame.setGeometry(QtCore.QRect(78, 126, 461, 421))
@@ -163,6 +165,15 @@ class Admin_Login_User(QDialog,Ui_Admin_Login):
         icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
+
+        login_image = os.path.join(application_path, "images", "login.png")
+        cancel_image =os.path.join(application_path, "images", "cancel.png")
+
+        self.login_btn.setIcon(QtGui.QIcon(login_image))
+        self.login_btn.setIconSize(QtCore.QSize(40, 40))
+
+        self.cancel_btn.setIcon(QtGui.QIcon(cancel_image))
+        self.cancel_btn.setIconSize(QtCore.QSize(40, 40))
 
         self.show()
 

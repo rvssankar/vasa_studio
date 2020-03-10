@@ -213,6 +213,11 @@ class Work_Finish_Window(QDialog,Ui_finish_window):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        finish_image = os.path.join(application_path, "images", "complete.png")
+
+        self.finish_btn.setIcon(QtGui.QIcon(finish_image))
+        self.finish_btn.setIconSize(QtCore.QSize(50, 50))
+
     def connectdb(self):
         global cur
         global connect

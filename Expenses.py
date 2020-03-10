@@ -340,6 +340,26 @@ class Add_Expenses(QDialog,Ui_expense_dialog):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        save_image = os.path.join(application_path, "images", "save.png")
+
+        clear_image = os.path.join(application_path, "images", "clear.png")
+        close_image = os.path.join(application_path, "images", "close.png")
+        viewall_image =os.path.join(application_path, "images", "search.png")
+
+        self.calender_image = os.path.join(application_path, "images", "calender.png")
+
+        self.save_btn.setIcon(QtGui.QIcon(save_image))
+        self.save_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.clear_btn.setIcon(QtGui.QIcon(clear_image))
+        self.clear_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.close_btn.setIcon(QtGui.QIcon(close_image))
+        self.close_btn.setIconSize(QtCore.QSize(30, 30))
+
+        self.show_btn.setIcon(QtGui.QIcon(viewall_image))
+        self.show_btn.setIconSize(QtCore.QSize(30, 30))
+
     def connectdb(self):
         global cur
         global connect
@@ -438,6 +458,8 @@ class Add_Expenses(QDialog,Ui_expense_dialog):
         self.calender.clicked.connect(self.updatedate)
         self.calender.setWindowModality(Qt.ApplicationModal)
         self.calender.setWindowTitle("Expense Date")
+
+        self.calender.setWindowIcon(QtGui.QIcon(self.calender_image))
 
         self.calender.show()
 

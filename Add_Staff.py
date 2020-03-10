@@ -159,12 +159,13 @@ class Ui_New_staff(object):
         font.setItalic(False)
         font.setWeight(75)
         self.change_btn.setFont(font)
-        self.change_btn.setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.05, y1:0, x2:1, y2:1, stop:0 rgba(68, 187, 0, 243), stop:1 rgba(255, 255, 255, 255));\n"
+        self.change_btn.setStyleSheet("#change_btn{background-color:qlineargradient(spread:pad, x1:0.05, y1:0, x2:1, y2:1, stop:0 rgba(68, 187, 0, 243), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#change_btn:pressed{border-style:solid;border-width:6px}"                                      )
         self.change_btn.setObjectName("change_btn")
         self.clr_btn = QtWidgets.QPushButton(self.staff_frame)
         self.clr_btn.setGeometry(QtCore.QRect(360, 409, 131, 61))
@@ -174,12 +175,13 @@ class Ui_New_staff(object):
         font.setItalic(False)
         font.setWeight(75)
         self.clr_btn.setFont(font)
-        self.clr_btn.setStyleSheet("background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 144, 35, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.clr_btn.setStyleSheet("#clr_btn{background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(159, 144, 35, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#clr_btn:pressed{border-style:solid;border-width:6px}"                                   )
         self.clr_btn.setObjectName("clr_btn")
         self.change_btn_2 = QtWidgets.QPushButton(self.staff_frame)
         self.change_btn_2.setGeometry(QtCore.QRect(10, 420, 161, 41))
@@ -189,12 +191,13 @@ class Ui_New_staff(object):
         font.setItalic(False)
         font.setWeight(75)
         self.change_btn_2.setFont(font)
-        self.change_btn_2.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(143, 89, 162, 255), stop:1 rgba(255, 255, 255, 255));\n"
+        self.change_btn_2.setStyleSheet("#change_btn_2{background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(143, 89, 162, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius:20px;\n"
 "border-style:outset;\n"
 "border-width:3px;\n"
 "border-color:black;\n"
-"font:bold;")
+"font:bold;} \n"
+"#change_btn_2:pressed{border-style:solid;border-width:6px}"                                        )
         self.change_btn_2.setObjectName("change_btn_2")
         self.toolButton = QtWidgets.QToolButton(New_staff)
         self.toolButton.setGeometry(QtCore.QRect(160, 61, 371, 81))
@@ -264,6 +267,20 @@ class Add_Staff_Window(QDialog,Ui_New_staff):
         icon_image = os.path.join(application_path, "images", "VASA_ICON.png")
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
+
+        add_image = os.path.join(application_path, "images", "add.png")
+
+        clear_image = os.path.join(application_path, "images", "clear.png")
+        view_image = os.path.join(application_path, "images", "view.png")
+
+        self.change_btn.setIcon(QtGui.QIcon(add_image))
+        self.change_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.clr_btn.setIcon(QtGui.QIcon(clear_image))
+        self.clr_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.change_btn_2.setIcon(QtGui.QIcon(view_image))
+        self.change_btn_2.setIconSize(QtCore.QSize(30, 30))
 
     def addbtn(self):
 

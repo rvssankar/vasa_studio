@@ -241,6 +241,23 @@ class Add_Function_Product_window(QDialog,Ui_New_product_dialog):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        clear_image = os.path.join(application_path, "images", "clear.png")
+        save_image = os.path.join(application_path, "images", "save.png")
+        add_image = os.path.join(application_path, "images", "add.png")
+
+
+        self.clear_btn.setIcon(QtGui.QIcon(clear_image))
+        self.clear_btn.setIconSize(QtCore.QSize(35, 35))
+
+        self.save_btn.setIcon(QtGui.QIcon(save_image))
+        self.save_btn.setIconSize(QtCore.QSize(30, 30))
+
+        self.add_btn.setIcon(QtGui.QIcon(add_image))
+        self.add_btn.setIconSize(QtCore.QSize(20, 20))
+
+        self.add_btn_2.setIcon(QtGui.QIcon(add_image))
+        self.add_btn_2.setIconSize(QtCore.QSize(20, 20))
+
 
     def connectdb(self):
         global cur
@@ -254,7 +271,7 @@ class Add_Function_Product_window(QDialog,Ui_New_product_dialog):
         return cur
 
     def newprod(self):
-        text,okpressed = QInputDialog.getText(self,'Add Product','Product Name :',QLineEdit.Normal,"")
+        text,okpressed = QInputDialog.getText(self,'Add Product','<html style="font-size:12pt;font-weight:bold;">Product Name :</html>',QLineEdit.Normal,"")
         if okpressed and text!='':
                 value = str.upper(text)
                 self.connectdb()
@@ -269,7 +286,7 @@ class Add_Function_Product_window(QDialog,Ui_New_product_dialog):
 
 
     def newpackage(self):
-        text,okpressed = QInputDialog.getText(self,'Add Package','Package Name :',QLineEdit.Normal,"")
+        text,okpressed = QInputDialog.getText(self,'Add Package','<html style="font-size:12pt;font-weight:bold;">Package Name :</html>',QLineEdit.Normal,"")
         if okpressed and text!='':
                 value = str.upper(text)
                 self.connectdb()

@@ -442,6 +442,19 @@ class Function_Report_Page(QDialog,Ui_function_report):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        excel_image = os.path.join(application_path, "images", "excel.png")
+        close_image = os.path.join(application_path, "images", "close.png")
+        show_image = os.path.join(application_path, "images", "search.png")
+
+        self.export_btn.setIcon(QtGui.QIcon(excel_image))
+        self.export_btn.setIconSize(QtCore.QSize(30, 30))
+
+        self.close_btn.setIcon(QtGui.QIcon(close_image))
+        self.close_btn.setIconSize(QtCore.QSize(30, 30))
+
+        self.show_btn.setIcon(QtGui.QIcon(show_image))
+        self.show_btn.setIconSize(QtCore.QSize(30, 30))
+
 
 
 

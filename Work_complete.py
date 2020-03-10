@@ -283,6 +283,11 @@ class Work_Complete_Page(QDialog,Ui_work_complete):
 
         self.setWindowIcon(QtGui.QIcon(icon_image))
 
+        show_image = os.path.join(application_path, "images", "search.png")
+
+        self.finish_btn.setIcon(QtGui.QIcon(show_image))
+        self.finish_btn.setIconSize(QtCore.QSize(50, 50))
+
 
     def connectdb(self):
         global cur
