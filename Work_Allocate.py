@@ -6,6 +6,7 @@ import pyodbc
 import datetime
 import os
 import sys
+from Odbc_Connection import  Add_Odbc_Connection
 
 
 class Ui_allocate_window(object):
@@ -237,13 +238,20 @@ class Work_Allocate_Page (QDialog,Ui_allocate_window):
     def connectdb(self):
         global cur
         global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
+        '''global cur
+        global connect
 
         connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
         cur = connect.cursor()
-        return cur
+        return cur'''
 
     def table_records(self):
         self.allocate_table.setRowCount(0)

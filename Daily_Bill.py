@@ -7,6 +7,7 @@ import sys
 import pyodbc
 import datetime
 from PyQt5.QtPrintSupport import QPrinter,QPrintDialog,QPrintPreviewDialog
+from Odbc_Connection import Add_Odbc_Connection
 
 
 
@@ -437,13 +438,21 @@ class Add_Daily_Bill(QDialog,Ui_Daily_bill):
     def connectdb(self):
         global cur
         global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
+
+        '''global cur
+        global connect
 
         connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
         cur = connect.cursor()
-        return cur
+        return cur'''
 
     def table_records(self):
         self.viewtable.setRowCount(0)

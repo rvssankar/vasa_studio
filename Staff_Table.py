@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QDialog,QTableWidgetItem,QMessageBox,QTableWidget
 import pyodbc
 import os
 import sys
+from Odbc_Connection import Add_Odbc_Connection
 
 
 class Ui_Table_dialog(object):
@@ -138,6 +139,14 @@ class Add_Staff_Details(QDialog,Ui_Table_dialog):
         self.close_btn.setIcon(QtGui.QIcon(close_image))
         self.close_btn.setIconSize(QtCore.QSize(45, 45))
 
+    def connectdb(self):
+        global cur
+        global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
 
     def display_records(self):
         connect = pyodbc.connect('Driver={SQL SERVER};'
@@ -178,11 +187,13 @@ class Add_Staff_Details(QDialog,Ui_Table_dialog):
 
             del_data = (user_name,phone_no)
 
-            connect = pyodbc.connect('Driver={SQL SERVER};'
+            self.connectdb()
+
+            '''connect = pyodbc.connect('Driver={SQL SERVER};'
                                      'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                      'Database=VASADB;'
                                      'Trusted_Connection=yes;')
-            cur = connect.cursor()
+            cur = connect.cursor()'''
             sel_query = 'SELECT USERNAME,EMAIL_ID,CONTACT_NUMBER,ADDRESS FROM dbo.USERS'
             del_query = 'DELETE FROM dbo.USERS WHERE USERNAME=? AND CONTACT_NUMBER =?'
 

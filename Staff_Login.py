@@ -5,6 +5,7 @@ import pyodbc
 import Vasa
 import os
 import sys
+from Odbc_Connection import Add_Odbc_Connection
 
 class Ui_Staff_Login(object):
     def setupUi(self, Staff_Login):
@@ -175,13 +176,19 @@ class Staff_Login_User(QDialog,Ui_Staff_Login):
     def connectdb(self):
         global cur
         global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+        return cur
+
+        '''global cur
+        global connect
 
         connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
         cur = connect.cursor()
-        return cur
+        return cur'''
 
     def loginbtn(self):
 

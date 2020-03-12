@@ -6,6 +6,7 @@ import pyodbc
 import Vasa
 import os
 import sys
+from Odbc_Connection import  Add_Odbc_Connection
 
 
 class Ui_Change_Admin_Password(object):
@@ -243,6 +244,14 @@ class Staff_Password_Change(QDialog,Ui_Change_Admin_Password):
 
         self.show()
 
+    def connectdb(self):
+        global cur
+        global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
     def changebtn(self):
         self.username = str.lower(self.username_le.text())
         self.currpass = self.cur_pass_le.text()
@@ -255,12 +264,13 @@ class Staff_Password_Change(QDialog,Ui_Change_Admin_Password):
             query = "UPDATE dbo.users set PASSWORD='%s' WHERE USERNAME ='%s' AND PASSWORD='%s' "
             data = (self.newpass,self.username,self.currpass)
 
+            self.connectdb()
 
-            connect = pyodbc.connect('Driver={SQL SERVER};'
+            '''connect = pyodbc.connect('Driver={SQL SERVER};'
                                      'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                      'Database=VASADB;'
                                      'Trusted_Connection=yes;')
-            cur = connect.cursor()
+            cur = connect.cursor()'''
 
             cur.execute(sel_query,(self.username,self.currpass))
             result = cur.fetchall()

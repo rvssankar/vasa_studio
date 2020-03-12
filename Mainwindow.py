@@ -21,6 +21,8 @@ from Daily_Report import Daily_Report_Page
 from Function_Report import Function_Report_Page
 from Expense_Report import Expense_Report_Page
 from Reminder import Reminder_Page
+
+from Dummy_Bill import  Add_Dummy_Bill
 import VASA_IMAGE
 import sys
 import os
@@ -107,6 +109,8 @@ class Mainwindow(QMainWindow):
         expense_report =QAction('Expense Report',self)
         reminders = QAction("Reminders",self)
 
+        dummy_bill = QAction("Add Dummy Bill",self)
+
 
 
         self.loginmenu.addAction(admin)
@@ -139,6 +143,8 @@ class Mainwindow(QMainWindow):
         prodcostmenu.addAction(Add_daily_product)
         prodcostmenu.addAction(Add_function_product)
 
+        prodcostmenu.addAction(dummy_bill)
+
         admin.triggered.connect(self.adminpage)
         staff.triggered.connect(self.staffpage)
         admin_change.triggered.connect(self.admin_change_password)
@@ -161,6 +167,8 @@ class Mainwindow(QMainWindow):
         reminders.triggered.connect(self.reminders)
         exit.triggered.connect(self.close)
         logout.triggered.connect(self.logout)
+
+        dummy_bill.triggered.connect(self.dummybill)
 
 
         self.menulist = [chgpwdmenu,addstaffmenu,custbillmenu,prodcostmenu,expensemenu,workstatsmenu,reportsmenu,remindermenu,logoutmenu]
@@ -291,6 +299,12 @@ class Mainwindow(QMainWindow):
     def reminders(self):
         dialog = Reminder_Page()
         dialog.exec_()
+
+    def dummybill(self):
+        dialog = Add_Dummy_Bill()
+        #dialog.exec_()
+
+
 
 
 

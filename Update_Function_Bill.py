@@ -5,7 +5,7 @@ import os
 import sys
 import pyodbc
 import datetime
-
+from Odbc_Connection import Add_Odbc_Connection
 
 class Ui_new_function(object):
     def setupUi(self, new_function):
@@ -445,13 +445,20 @@ class Update_Function_Bill(QDialog,Ui_new_function):
     def connectdb(self):
         global cur
         global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
+        '''global cur
+        global connect
 
         connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
         cur = connect.cursor()
-        return cur
+        return cur'''
 
     def delivery_calender(self):
         self.calender = QCalendarWidget()

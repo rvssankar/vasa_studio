@@ -7,6 +7,7 @@ import datetime
 import xlsxwriter
 import os
 import sys
+from Odbc_Connection import Add_Odbc_Connection
 
 class Ui_daily_report(object):
     def setupUi(self, daily_report):
@@ -493,13 +494,20 @@ class Daily_Report_Page(QDialog,Ui_daily_report):
     def connectdb(self):
         global cur
         global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
+        '''global cur
+        global connect
 
         connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
         cur = connect.cursor()
-        return cur
+        return cur'''
 
     def table_records(self):
         self.daily_table.setRowCount(0)

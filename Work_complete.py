@@ -6,6 +6,7 @@ import datetime
 import pyodbc
 import os
 import sys
+from Odbc_Connection import Add_Odbc_Connection
 
 class Ui_work_complete(object):
     def setupUi(self, work_complete):
@@ -292,13 +293,20 @@ class Work_Complete_Page(QDialog,Ui_work_complete):
     def connectdb(self):
         global cur
         global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
+        '''global cur
+        global connect
 
         connect = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                                  'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                  'Database=VASADB;'
                                  'Trusted_Connection=yes;')
         cur = connect.cursor()
-        return cur
+        return cur'''
 
     def table_records(self):
         self.finish_table.setRowCount(0)

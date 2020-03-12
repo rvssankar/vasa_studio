@@ -5,6 +5,7 @@ from Staff_Table import Add_Staff_Details
 import Vasa
 import os
 import sys
+from Odbc_Connection import Add_Odbc_Connection
 
 class Ui_New_staff(object):
     def setupUi(self, New_staff):
@@ -282,6 +283,14 @@ class Add_Staff_Window(QDialog,Ui_New_staff):
         self.change_btn_2.setIcon(QtGui.QIcon(view_image))
         self.change_btn_2.setIconSize(QtCore.QSize(30, 30))
 
+    def connectdb(self):
+        global cur
+        global connect
+        cur, con = Add_Odbc_Connection.connectdb(self)
+        connect = con
+
+        return cur
+
     def addbtn(self):
 
         if self.username_le.text() =='':
@@ -308,12 +317,12 @@ class Add_Staff_Window(QDialog,Ui_New_staff):
             sel_query = 'SELECT * FROM dbo.USERS WHERE USERNAME=? AND PASSWORD=?'
             insert_query = "INSERT INTO dbo.USERS VALUES (NEXT VALUE FOR audit.users_seq,?,?,?,?,?) "
             data =(self.username,self.password,self.email,self.contact,self.address)
-
-            connect = pyodbc.connect('Driver={SQL SERVER};' 
+            self.connectdb()
+            '''connect = pyodbc.connect('Driver={SQL SERVER};' 
                                      'Server=DHANALAKSHMI_PC\SQLEXPRESS;'
                                      'Database=VASADB;'
                                      'Trusted_Connection=yes;')
-            cur = connect.cursor()
+            cur = connect.cursor()'''
             cur.execute(sel_query,(self.username,self.password))
             result = cur.fetchall()
 
